@@ -1,0 +1,172 @@
+{
+	"config": {
+		"lang": [
+			"de",
+			"en"
+		],
+		"jsLangObject": "Languages",
+		"jsLangDestFile": "/resources/lang/Languages.js",
+		"scssAddVariablesDestFile": "/resources/scss/_components-variables.scss",
+		"scssDestFile": "/resources/scss/style.scss",
+		"scssAtfDestFile": "/resources/scss/atf.scss",
+		"phpClassesDestFile": "/resources/classes/include-classes.php",
+		"phpClassesDestFolder": "/resources/classes/"
+	},
+	"use": [
+		{
+			"key": "/template/template-parts-atf-style"
+		},
+		{
+			"key": "/scss/global-mixins-breakpoints"
+		},
+		{
+			"key": "/scss/global-mixins-hover-focus"
+		},
+		{
+			"key": "/scss/variables"
+		},
+		{
+			"key": "/scss/components-variables"
+		},
+		{
+			"key": "/scss/atf-body"
+		},
+		{
+			"key": "/scss/atf-sr-only"
+		},
+		{
+			"key": "/fonts/font-awesome"
+		},
+		{
+			"key": "/fonts/roboto"
+		},
+		{
+			"key": "/js/vendor/modernizr"
+		},
+		{
+			"key": "/js/vendor/jquery"
+		},
+		{
+			"key": "/js/vendor/popper"
+		},
+		{
+			"key": "/vendor/bootstrap"
+		},
+		{
+			"key": "/js/scripts/utils/init"
+		},
+		{
+			"key": "/js/scripts/utils/analyze-browser"
+		},
+		{
+			"key": "/js/scripts/utils/alert"
+		},
+		{
+			"key": "/js/scripts/utils/ui-handler"
+		},
+		{
+			"key": "/js/scripts/utils/autoclose"
+		},
+		{
+			"key": "/js/scripts/utils/cookie-handler"
+		},
+		{
+			"key": "/js/scripts/utils/message-handler"
+		},
+		{
+			"key": "/js/scripts/utils/remote-event"
+		},
+		{
+			"key": "/js/scripts/utils/simple-slide-toggle"
+		},
+		{
+			"key": "/js/scripts/utils/toggle"
+		},
+		{
+			"key": "/js/scripts/utils/wait-screen"
+		},
+		{
+			"key": "/js/scripts/polyfill/ielte11-banner-height"
+		},
+		{
+			"key": "/js/scripts/polyfill/object-fit-cover"
+		},
+		{
+			"key": "/js/scripts/libs/animated-anchors"
+		},
+		{
+			"key": "/js/scripts/libs/cookie-related-elem"
+		},
+		{
+			"key": "/js/scripts/libs/hash-tabs"
+		},
+		{
+			"key": "/js/scripts/libs/init-remote-event"
+		},
+		{
+			"key": "/js/scripts/libs/init-toggle"
+		},
+		{
+			"key": "/js/scripts/libs/jquery-lazyload-custom"
+		},
+		{
+			"key": "/js/scripts/libs/submit-on-change"
+		},
+		{
+			"key": "/js/scripts/libs/to-top"
+		},
+		{
+			"key": "/js/scripts/libs/validate-form"
+		},
+		{
+			"key": "/test/test-component-001",
+			"overrideComponentConfig": {
+				"srcPlugin": 0,
+				"js": {
+					"use": [
+						{
+							"key": "/js/component.js"
+						}
+					],
+					"addVendor": null,
+					"lang": null
+				},
+				"copyFiles": null,
+				"lang": null
+			}
+		},
+		{
+			"key": "/test/example-img"
+		},
+		{
+			"key": "/libs/components-navs-appnav"
+		},
+		{
+			"key": "/libs/components-banners-background"
+		},
+		{
+			"key": "/libs/components-banners-st-banner"
+		},
+		{
+			"key": "/libs/components-banners-vh-banner"
+		},
+		{
+			"key": "/libs/components-buttons-to-top"
+		},
+		{
+			"key": "/libs/components-footer-basic-footer"
+		},
+		{
+			"key": "/libs/components-photoswipe-basic"
+		},
+		{
+			"key": "/img/ci-logo"
+		},
+		{
+			"key": "/img/ci-icon"
+		},
+		{
+			"key": "/js/scripts/init"
+		}
+	]
+}
