@@ -80,7 +80,7 @@ if ( ! class_exists( 'BsxAppNavExampleNav001' ) ) {
 			</li>
 		</ul>
 	</li>
-	<li class="bsx-appnav-bigmenu-dropdown columns-3 active">
+	<li class="active">
 		<a class="bsx-appnav-dropdown-toggle" id="navbarDropdownMenuLink-a2" href="#" data-fn="dropdown-multilevel" aria-haspopup="true" aria-expanded="false">Dictum</a>
 		<ul class="" aria-labelledby="navbarDropdownMenuLink-a2">
 			<li class="bsx-appnav-back-link">
@@ -248,6 +248,9 @@ if ( ! class_exists( 'BsxAppNavExampleNav001' ) ) {
 			</li>
 			<li class="">
 				<a class="" href="#">Natoque penatibus</a>
+			</li>
+			<li class="">
+				<a class="" href="#">Faucibus tincidunt</a>
 			</li>
 		</ul>
 	</li>
