@@ -71,7 +71,7 @@ var PHP_CLASSES_LIST = [];
 const PROJECT_NAME = config.projectName;
 
 // template files path (to replace plugin name or include atf style)
-const TEMPLATE_DATA_PATH = '.' + RESOURCES_PATH + '/template';
+const TEMPLATE_DATA_PATH = checkAdDotBefore( config.templateSrcFolder );
 const REPLACE_PROJECT_NAME_PATTERN = /###PROJECT_NAME###/g;
 // prepare include atf style
 const INCLUDE_COMPRESSED_ATF_STYLE_PATTERN = /###COMPRESSED_ATF_STYLE###/g;

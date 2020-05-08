@@ -21,6 +21,7 @@
 	"exampleImgDestFolder": "/assets/example-img",
 	"phpClassesDestFile": 		"/resources/classes/include-classes.php",
 	"phpClassesDestFolder": 	"/resources/classes",
+	"templateSrcFolder": 			"/resources/template",
 	"templateDestFolder": 			"/resources/template",
 	"templatePartsDestFolder": 		"/resources/template/template-parts",
 	"jsLangObject": 			"Languages",
