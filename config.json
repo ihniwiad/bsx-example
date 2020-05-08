@@ -1,5 +1,15 @@
 {
 	"projectName": "bsx-example",
+	"relatedPackages": [
+		{
+			"path": "./../bsx-basic-style",
+			"scssPath": "../../../bsx-basic-style"
+		},
+		{
+			"path": ".",
+			"scssPath": ".."
+		}
+	],
 	"lang": [
 		"de",
 		"en"

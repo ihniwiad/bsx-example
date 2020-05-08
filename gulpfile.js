@@ -17,27 +17,21 @@ const pipeline      = require( 'readable-stream' ).pipeline;
 
 
 // include config file
+/* 
+    related packages: 
+        0 -> basic style package
+        1 -> this package
+        ... -> other packages
+*/
 var config = require( './config.json' );
 
-
-// plugins (0 -> basic style plugin, 1 -> this plugin, ... -> other plugins)
-const PLUGIN_PATHS = [
-    './../bsx-basic-style',
-    '.'
-];
-
-// scss sources relative to scss file
-const SCSS_SRC_PATHS = [
-    '../../../bsx-basic-style',
-    '..'
-];
 
 // general
 const RESOURCES_PATH = '/resources';
 const COMPONENTS_PATH = '/components';
-const SRC_PATH = '/src';
 const COMPONENTS_CONFIG_FILE_PATH = '.' + RESOURCES_PATH + '/components.json';
 const SINGLE_CONFIG_FILE_NAME = '/config.json';
+
 const PATH_SEPARATOR = '/';
 const FILE_EXTENSION_SEPARATOR = '.';
 
@@ -185,7 +179,7 @@ function filesStackPrepare( cb ) {
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
         var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
-        var CURRENT_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_PLUGIN ];
+        var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
         // get each components config
@@ -196,7 +190,7 @@ function filesStackPrepare( cb ) {
 
         // get files src plugin path
         var CURRENT_COMPONENT_SRC_PLUGIN = ( CURRENT_COMPONENT_CONFIG.srcPlugin === undefined || CURRENT_COMPONENT_CONFIG.srcPlugin === null ) ? CURRENT_COMPONENT_PLUGIN : CURRENT_COMPONENT_CONFIG.srcPlugin;
-        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_SRC_PLUGIN ];
+        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_SRC_PLUGIN ].path;
 
         if ( !! CURRENT_COMPONENT_CONFIG.copyFiles && CURRENT_COMPONENT_CONFIG.copyFiles !== null ) {
             var CURRENT_FILE_STACK = CURRENT_COMPONENT_CONFIG.copyFiles;
@@ -306,7 +300,7 @@ function phpClassesStackPrepare( cb ) {
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
         var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
-        var CURRENT_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_PLUGIN ];
+        var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
         // get each components config
@@ -317,7 +311,7 @@ function phpClassesStackPrepare( cb ) {
 
         // get files src plugin path
         var CURRENT_COMPONENT_SRC_PLUGIN = ( CURRENT_COMPONENT_CONFIG.srcPlugin === undefined || CURRENT_COMPONENT_CONFIG.srcPlugin === null ) ? CURRENT_COMPONENT_PLUGIN : CURRENT_COMPONENT_CONFIG.srcPlugin;
-        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_SRC_PLUGIN ];
+        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_SRC_PLUGIN ].path;
 
         if ( !! CURRENT_COMPONENT_CONFIG.php && CURRENT_COMPONENT_CONFIG.php !== null && !! CURRENT_COMPONENT_CONFIG.php.classes && CURRENT_COMPONENT_CONFIG.php.classes !== null ) {
 
@@ -490,8 +484,7 @@ function scssConcat( cb ) {
 
         for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
             var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
-            var CURRENT_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_PLUGIN ];
-            //var CURRENT_SCSS_PATH = SCSS_SRC_PATHS[ CURRENT_COMPONENT_PLUGIN ];
+            var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
             var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
             // get each components config
@@ -502,7 +495,7 @@ function scssConcat( cb ) {
 
             // get scss path from src plugin path
             var CURRENT_COMPONENT_SRC_PLUGIN = ( CURRENT_COMPONENT_CONFIG.srcPlugin === undefined || CURRENT_COMPONENT_CONFIG.srcPlugin === null ) ? CURRENT_COMPONENT_PLUGIN : CURRENT_COMPONENT_CONFIG.srcPlugin;
-            var CURRENT_SCSS_PATH = SCSS_SRC_PATHS[ CURRENT_COMPONENT_SRC_PLUGIN ];
+            var CURRENT_SCSS_PATH = config.relatedPackages[ CURRENT_COMPONENT_SRC_PLUGIN ].scssPath;
 
             // scss file
             if ( !! CURRENT_COMPONENT_CONFIG && !! CURRENT_COMPONENT_CONFIG.scss && !! CURRENT_COMPONENT_CONFIG.scss !== null ) {
@@ -623,7 +616,7 @@ function jsStackPrepare( cb ) {
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
         var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
-        var CURRENT_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_PLUGIN ];
+        var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
         // get each components config
@@ -634,7 +627,7 @@ function jsStackPrepare( cb ) {
 
         // get files src plugin path
         var CURRENT_COMPONENT_SRC_PLUGIN = ( CURRENT_COMPONENT_CONFIG.srcPlugin === undefined || CURRENT_COMPONENT_CONFIG.srcPlugin === null ) ? CURRENT_COMPONENT_PLUGIN : CURRENT_COMPONENT_CONFIG.srcPlugin;
-        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_SRC_PLUGIN ];
+        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_SRC_PLUGIN ].path;
 
         if ( !! CURRENT_COMPONENT_CONFIG.js && CURRENT_COMPONENT_CONFIG.js !== null && !! CURRENT_COMPONENT_CONFIG.js.use && CURRENT_COMPONENT_CONFIG.js.use !== null ) {
             var CURRENT_SCRIPTS_STACK = CURRENT_COMPONENT_CONFIG.js.use;
@@ -672,7 +665,7 @@ function jsVendorStackPrepare( cb ) {
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
         var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
-        var CURRENT_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_PLUGIN ];
+        var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
         // get each components config
@@ -683,7 +676,7 @@ function jsVendorStackPrepare( cb ) {
 
         // get files src plugin path
         var CURRENT_COMPONENT_SRC_PLUGIN = ( CURRENT_COMPONENT_CONFIG.srcPlugin === undefined || CURRENT_COMPONENT_CONFIG.srcPlugin === null ) ? CURRENT_COMPONENT_PLUGIN : CURRENT_COMPONENT_CONFIG.srcPlugin;
-        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = PLUGIN_PATHS[ CURRENT_COMPONENT_SRC_PLUGIN ];
+        var CURRENT_COMPONENT_SRC_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_SRC_PLUGIN ].path;
 
         if ( !! CURRENT_COMPONENT_CONFIG.js && CURRENT_COMPONENT_CONFIG.js !== null && !! CURRENT_COMPONENT_CONFIG.js.addVendor && CURRENT_COMPONENT_CONFIG.js.addVendor !== null ) {
             var CURRENT_VENDOR_STACK = CURRENT_COMPONENT_CONFIG.js.addVendor;
