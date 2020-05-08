@@ -15,6 +15,11 @@ const fs            = require( 'fs' );
 const uglify        = require( 'gulp-uglify' );
 const pipeline      = require( 'readable-stream' ).pipeline;
 
+
+// include config file
+var config = require( './config.json' );
+
+
 // plugins (0 -> basic style plugin, 1 -> this plugin, ... -> other plugins)
 const PLUGIN_PATHS = [
     './../bsx-basic-style',
@@ -42,43 +47,35 @@ const FILE_EXTENSION_SEPARATOR = '.';
 const SCSS_SRC_PATH = './resources/scss';
 const CSS_DEST_PATH = './assets/css';
 //const SCSS_DEST_FILE = './resources/scss/style.scss';
-const SCSS_DEST_FILE_FALLBACK = './resources/scss/style.scss';
-const SCSS_ATF_DEST_FILE_FALLBACK = './resources/scss/atf.scss';
 // TODO: rename to `_style-variables.scss` to relate to `style.scss`?
-const SCSS_ADD_VARIABLES_DEST_FILE_FALLBACK = './resources/scss/_components-variables.scss';
 
 // js
 const JS_DEST_PATH = './assets/js';
 const VENDOR_FILE_NAME  = 'vendor.js';
 const SCRIPTS_FILE_NAME = 'scripts.js';
 
-// view
-const VIEW_COMPONENTS_DEST_FILE_FALLBACK = './resources/views/Macros/Components.twig';
-
 // lang
 const LANG_DEST_PATH = '.' + RESOURCES_PATH + '/lang';
 
 // js lang
 //const JS_LANG_DEST_FILE = './resources/lang/Languages.js';
-const JS_LANG_DEST_FILE_FALLBACK = './resources/lang/Languages.js';
 
 // php classes
-const PHP_CLASSES_DEST_FILE_FALLBACK = '/resources/classes/include-classes.php';
-const PHP_CLASSES_DEST_FOLDER_FALLBACK = '/resources/classes';
-
 var PHP_CLASSES_FILES_STACK = [];
 var PHP_CLASSES_LIST = [];
 
 
-// documentation
-const DOCUMENTATION_DEST_FILE_FALLBACK = './resources/views/Macros/Documentation.twig';
-const DOCUMENTATION_NAV_DEST_FILE_FALLBACK = './resources/views/Macros/DocumentationNav.twig';
+// special file destinations used by filesStackPrepare() according to types (e.g. 'font', 'template', 'template-part')
+const FONTS_DEST_FOLDER = config.fontsDestFolder;
+const TEMPLATE_DEST_FOLDER = config.templateDestFolder;
+const TEMPLATE_PARTS_DEST_FOLDER = config.templatePartsDestFolder;
+const IMG_DEST_FOLDER = config.imgDestFolder;
 
 
 // plugin data
-const PLUGIN_DATA_PATH = './config.json';
-const PLUGIN_DATA = JSON.parse( fs.readFileSync( PLUGIN_DATA_PATH ) );
-const PLUGIN_NAME = PLUGIN_DATA.projectName;
+//const PLUGIN_DATA_PATH = './config.json';
+//const PLUGIN_DATA = JSON.parse( fs.readFileSync( PLUGIN_DATA_PATH ) );
+const PLUGIN_NAME = config.projectName;
 const SRC_DATA_PATH = './src';
 
 // twig files path (to replace plugin name)
@@ -86,7 +83,7 @@ const TEMPLATE_DATA_PATH = '.' + RESOURCES_PATH + '/template';
 const REPLACE_PROJECT_NAME_PATTERN = /###PROJECT_NAME###/g;
 
 
-// TODO: include atf style: (1.) read file, (2.) wrap file content (minified and non minified, dependant on param) with style element and include into header (before css files)
+// prepare include atf style
 const INCLUDE_COMPRESSED_ATF_STYLE_PATTERN = /###COMPRESSED_ATF_STYLE###/g;
 const INCLUDE_ATF_STYLE_PATTERN = /###ATF_STYLE###/g;
 
@@ -339,24 +336,15 @@ function plugin_scss() {
     }
 
     // write additional scss variables
-    var SCSS_ADD_VARIABLES_DEST_FILE = SCSS_ADD_VARIABLES_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.scssAddVariablesDestFile && COMPONENTS_JSON.config.scssAddVariablesDestFile !== null ) {
-        SCSS_ADD_VARIABLES_DEST_FILE = '.' + COMPONENTS_JSON.config.scssAddVariablesDestFile;
-    }
+    var SCSS_ADD_VARIABLES_DEST_FILE = config.scssAddVariablesDestFile;
     fs.writeFileSync( SCSS_ADD_VARIABLES_DEST_FILE, SCSS_ADD_VARIABLES_STRING );
 
     // write atf scss (above the fold)
-    var SCSS_ATF_DEST_FILE = SCSS_ATF_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.scssAtfDestFile && COMPONENTS_JSON.config.scssAtfDestFile !== null ) {
-        SCSS_ATF_DEST_FILE = '.' + COMPONENTS_JSON.config.scssAtfDestFile;
-    }
+    var SCSS_ATF_DEST_FILE = config.scssAtfDestFile;
     fs.writeFileSync( SCSS_ATF_DEST_FILE, SCSS_ATF_STRING );
 
     // write scss
-    var SCSS_DEST_FILE = SCSS_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.scssDestFile && COMPONENTS_JSON.config.scssDestFile !== null ) {
-        SCSS_DEST_FILE = '.' + COMPONENTS_JSON.config.scssDestFile;
-    }
+    var SCSS_DEST_FILE = config.scssDestFile;
     fs.writeFileSync( SCSS_DEST_FILE, SCSS_STRING );
 
     //var FILE_CONTENT = JSON.stringify( COMPONENTS_JSON.use, false, 2 );
@@ -405,8 +393,8 @@ gulp.task( 'plugin:components', function() {
 
     // write
     var VIEW_COMPONENTS_DEST_FILE = VIEW_COMPONENTS_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.viewComponentsDestFile && COMPONENTS_JSON.config.viewComponentsDestFile !== null ) {
-        VIEW_COMPONENTS_DEST_FILE = '.' + COMPONENTS_JSON.config.viewComponentsDestFile;
+    if ( !! config.viewComponentsDestFile && config.viewComponentsDestFile !== null ) {
+        VIEW_COMPONENTS_DEST_FILE = '.' + config.viewComponentsDestFile;
     }
     fs.writeFileSync( VIEW_COMPONENTS_DEST_FILE, VIEW_STRING );
 } );
@@ -779,15 +767,15 @@ gulp.task( 'plugin:documentation', function() {
 
     // write components & example
     var DOCUMENTATION_DEST_FILE = DOCUMENTATION_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.documentationDestFile && COMPONENTS_JSON.config.documentationDestFile !== null ) {
-        DOCUMENTATION_DEST_FILE = '.' + COMPONENTS_JSON.config.documentationDestFile;
+    if ( !! config.documentationDestFile && config.documentationDestFile !== null ) {
+        DOCUMENTATION_DEST_FILE = '.' + config.documentationDestFile;
     }
     fs.writeFileSync( DOCUMENTATION_DEST_FILE, DOCS_STRING + DOCS_EXAMPLE_STRING );
 
     // write nav
     var DOCUMENTATION_NAV_DEST_FILE = DOCUMENTATION_NAV_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.documentationNavDestFile && COMPONENTS_JSON.config.documentationNavDestFile !== null ) {
-        DOCUMENTATION_NAV_DEST_FILE = '.' + COMPONENTS_JSON.config.documentationNavDestFile;
+    if ( !! config.documentationNavDestFile && config.documentationNavDestFile !== null ) {
+        DOCUMENTATION_NAV_DEST_FILE = '.' + config.documentationNavDestFile;
     }
     fs.writeFileSync( DOCUMENTATION_NAV_DEST_FILE, DOCS_NAV_STRING );
 } );
@@ -876,7 +864,7 @@ var PROPERTY_VAL_QUOTE = '"';
 gulp.task( 'js:lang_file', function() {
 
     var COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
-    var LANG_FOLDERS = COMPONENTS_JSON.config.lang;
+    var LANG_FOLDERS = config.lang;
 
     // init lang object
     var JS_LANG_OBJECT = {};
@@ -915,12 +903,12 @@ gulp.task( 'js:lang_file', function() {
                     // get file
                     var ADAPTED_FILE_SRC = CURRENT_COMPONENT_SRC_PLUGIN_PATH + RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH + CURRENT_INTERNAL_PATH + CURRENT_LANG_FOLDER + CURRENT_FILE_NAME;
 
-                    JS_LANG_OBJECT_STR += COMPONENTS_JSON.config.jsLangObject + '.' + COMPONENTS_JSON.config.lang[ k ] + '[ \'' + splitFileName( CURRENT_FILE_NAME )[ 0 ] + '\' ] = {};\n';
+                    JS_LANG_OBJECT_STR += config.jsLangObject + '.' + config.lang[ k ] + '[ \'' + splitFileName( CURRENT_FILE_NAME )[ 0 ] + '\' ] = {};\n';
 
                     var FILE_NAME = splitFileName( CURRENT_FILE_NAME )[ 0 ];
 
                     // init property
-                    JS_LANG_OBJECT[ COMPONENTS_JSON.config.lang[ k ] ][ FILE_NAME ] = {};
+                    JS_LANG_OBJECT[ config.lang[ k ] ][ FILE_NAME ] = {};
 
                     var PROP_FILE_CONTENT = fs.readFileSync( ADAPTED_FILE_SRC ).toString();
 
@@ -937,7 +925,7 @@ gulp.task( 'js:lang_file', function() {
                             var PROP_VAL = PROP_KEY_VAL[ 1 ].trim().replace( /^\"+|\"+$/g, '' );
 
                             // add prop
-                            JS_LANG_OBJECT[ COMPONENTS_JSON.config.lang[ k ] ][ FILE_NAME ][ PROP_KEY ] = PROP_VAL;
+                            JS_LANG_OBJECT[ config.lang[ k ] ][ FILE_NAME ][ PROP_KEY ] = PROP_VAL;
                         }
 
                     }
@@ -950,11 +938,11 @@ gulp.task( 'js:lang_file', function() {
 
     //LOG = JS_LANG_OBJECT_STR;
     //LOG = JSON.stringify( JS_LANG_OBJECT, false, 4 );
-    JS_LANG_OBJECT_STR = '// this file was generated by gulpfile.js\n\nvar ' + COMPONENTS_JSON.config.jsLangObject + ' = ' + JSON.stringify( JS_LANG_OBJECT, false, 4 ) + ';\n';
+    JS_LANG_OBJECT_STR = '// this file was generated by gulpfile.js\n\nvar ' + config.jsLangObject + ' = ' + JSON.stringify( JS_LANG_OBJECT, false, 4 ) + ';\n';
 
     var JS_LANG_DEST_FILE = JS_LANG_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.jsLangObject && COMPONENTS_JSON.config.jsLangObject !== null ) {
-        JS_LANG_DEST_FILE = '.' + COMPONENTS_JSON.config.jsLangObject;
+    if ( !! config.jsLangObject && config.jsLangObject !== null ) {
+        JS_LANG_DEST_FILE = '.' + config.jsLangObject;
     }
     fs.writeFileSync( JS_LANG_DEST_FILE, JS_LANG_OBJECT_STR );
 
@@ -1140,7 +1128,7 @@ var PROP_STACK = [];
 
 gulp.task( 'plugin:lang_stack', function() {
     var COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
-    var LANG_FOLDERS = COMPONENTS_JSON.config.lang;
+    var LANG_FOLDERS = config.lang;
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
         var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
@@ -1463,11 +1451,33 @@ function filesStackPrepare( cb ) {
             var CURRENT_FILE_STACK = CURRENT_COMPONENT_CONFIG.copyFiles;
             for ( var j = 0; j < CURRENT_FILE_STACK.length; j++ ) {
 
+                // TODO: check if type key
+                var CURRENT_FILE_DEST_FOLDER = '';
+                var CURRENT_FILE_SRC = CURRENT_FILE_STACK[ j ].type;
+                if ( CURRENT_FILE_STACK[ j ].type && CURRENT_FILE_STACK[ j ].type !== null ) {
+
+                    // type is set, chose what to do
+                    switch( CURRENT_FILE_SRC ) {
+                        case 'font':
+                            CURRENT_FILE_DEST_FOLDER = FONTS_DEST_FOLDER;
+                            break;
+                        case 'template':
+                            CURRENT_FILE_DEST_FOLDER = TEMPLATE_DEST_FOLDER;
+                            break;
+                        case 'template-parts':
+                            CURRENT_FILE_DEST_FOLDER = TEMPLATE_PARTS_DEST_FOLDER;
+                            break;
+                        case 'img':
+                            CURRENT_FILE_DEST_FOLDER = IMG_DEST_FOLDER;
+                            break;
+                    } 
+                }
+
                 var CURRENT_FILE_SRC = CURRENT_FILE_STACK[ j ].src;
                 var CURRENT_FILE_DEST = CURRENT_FILE_STACK[ j ].dest;
 
                 var ADAPTED_FILE_SRC = CURRENT_COMPONENT_SRC_PLUGIN_PATH + ( ( CURRENT_FILE_SRC.indexOf( '/node_modules' ) == 0 || CURRENT_FILE_SRC.indexOf( RESOURCES_PATH ) == 0 ) ? '' : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_SRC;
-                var ADAPTED_FILE_DEST = ( ( CURRENT_FILE_DEST.indexOf( RESOURCES_PATH ) == 0 || CURRENT_FILE_DEST.indexOf( SRC_PATH ) == 0 || CURRENT_FILE_DEST.indexOf( ASSETS_PATH ) == 0 ) ? '.' : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_DEST;
+                var ADAPTED_FILE_DEST = ( ( CURRENT_FILE_DEST.indexOf( RESOURCES_PATH ) == 0 || CURRENT_FILE_DEST.indexOf( ASSETS_PATH ) == 0 || CURRENT_FILE_DEST_FOLDER != '' ) ? '.' + CURRENT_FILE_DEST_FOLDER : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_DEST;
                 
                 FILE_STACK.push( {
                     src: ADAPTED_FILE_SRC,
@@ -1559,13 +1569,6 @@ function phpClassesStackPrepare( cb ) {
             var CURRENT_PHP_CLASSES_FILES_STACK = CURRENT_COMPONENT_CONFIG.php.classes;
             for ( var j = 0; j < CURRENT_PHP_CLASSES_FILES_STACK.length; j++ ) {
 
-                /*
-                    TODO: 
-                        - get & remember file name
-                        - adapt file dest
-                    
-                */
-
                 var CURRENT_FILE_SRC = CURRENT_PHP_CLASSES_FILES_STACK[ j ].key;
 
                 // file name and extension (without path)
@@ -1574,13 +1577,10 @@ function phpClassesStackPrepare( cb ) {
                 // remember class file name
                 PHP_CLASSES_LIST.push( CURRENT_FILE_NAME );
 
-                var PHP_CLASSES_DEST_FOLDER = PHP_CLASSES_DEST_FOLDER_FALLBACK;
-                if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.phpClassesDestFolder && COMPONENTS_JSON.config.phpClassesDestFolder !== null ) {
-                    PHP_CLASSES_DEST_FOLDER = COMPONENTS_JSON.config.phpClassesDestFolder;
-                }
+                var PHP_CLASSES_DEST_FOLDER = config.phpClassesDestFolder;
 
                 var ADAPTED_FILE_SRC = CURRENT_COMPONENT_SRC_PLUGIN_PATH + ( ( CURRENT_FILE_SRC.indexOf( '/node_modules' ) == 0 || CURRENT_FILE_SRC.indexOf( RESOURCES_PATH ) == 0 ) ? '' : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_SRC;
-                var ADAPTED_FILE_DEST = '.' + PHP_CLASSES_DEST_FOLDER + CURRENT_FILE_NAME;
+                var ADAPTED_FILE_DEST = '.' + PHP_CLASSES_DEST_FOLDER + '/' + CURRENT_FILE_NAME;
                 
                 // remember src & dest
                 PHP_CLASSES_FILES_STACK.push( {
@@ -1660,10 +1660,7 @@ function phpClassesInclude( cb ) {
 
     var FILE_CONTENT = '<?php \n';
 
-    var PHP_CLASSES_DEST_FILE = PHP_CLASSES_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.phpClassesDestFile && COMPONENTS_JSON.config.phpClassesDestFile !== null ) {
-        PHP_CLASSES_DEST_FILE = '.' + COMPONENTS_JSON.config.phpClassesDestFile;
-    }
+    var PHP_CLASSES_DEST_FILE = '.' + config.phpClassesDestFile;
 
     for ( var i = 0; i < PHP_CLASSES_LIST.length; i++ ) {
 
@@ -1812,24 +1809,15 @@ function scssConcat( cb ) {
     }
 
     // write additional scss variables
-    var SCSS_ADD_VARIABLES_DEST_FILE = SCSS_ADD_VARIABLES_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.scssAddVariablesDestFile && COMPONENTS_JSON.config.scssAddVariablesDestFile !== null ) {
-        SCSS_ADD_VARIABLES_DEST_FILE = '.' + COMPONENTS_JSON.config.scssAddVariablesDestFile;
-    }
+    var SCSS_ADD_VARIABLES_DEST_FILE = '.' + config.scssAddVariablesDestFile;
     fs.writeFileSync( SCSS_ADD_VARIABLES_DEST_FILE, SCSS_ADD_VARIABLES_STRING );
 
     // write atf scss (above the fold)
-    var SCSS_ATF_DEST_FILE = SCSS_ATF_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.scssAtfDestFile && COMPONENTS_JSON.config.scssAtfDestFile !== null ) {
-        SCSS_ATF_DEST_FILE = '.' + COMPONENTS_JSON.config.scssAtfDestFile;
-    }
+    var SCSS_ATF_DEST_FILE = '.' + config.scssAtfDestFile;
     fs.writeFileSync( SCSS_ATF_DEST_FILE, SCSS_ATF_STRING );
 
     // write scss
-    var SCSS_DEST_FILE = SCSS_DEST_FILE_FALLBACK;
-    if ( !! COMPONENTS_JSON.config && COMPONENTS_JSON.config !== null && !! COMPONENTS_JSON.config.scssDestFile && COMPONENTS_JSON.config.scssDestFile !== null ) {
-        SCSS_DEST_FILE = '.' + COMPONENTS_JSON.config.scssDestFile;
-    }
+    var SCSS_DEST_FILE = '.' + config.scssDestFile;
     fs.writeFileSync( SCSS_DEST_FILE, SCSS_STRING );
 
     //var FILE_CONTENT = JSON.stringify( COMPONENTS_JSON.use, false, 2 );
