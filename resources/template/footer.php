@@ -15,8 +15,17 @@
 
 		?>
 		
-		<script src="<?php echo $assetsPath ?>js/vendor<?php if ( ! $isDevMode ) { ?>.min<?php } ?>.js" defer></script>
-		<script src="<?php echo $assetsPath ?>js/scripts<?php if ( ! $isDevMode ) { ?>.min<?php } ?>.js" defer></script>
+		<?php
+			// vendor js file version
+			$vendorJsFilePath = $rootRelatedAssetsPath . 'js/vendor.min.js';
+			$vendorJsVersion = file_exists( $vendorJsFilePath ) ? filemtime( $vendorJsFilePath ) : 'null';
+
+			// scripts js file version
+			$scriptsJsFilePath = $rootRelatedAssetsPath . 'js/scripts.min.js';
+			$scriptsJsVersion = file_exists( $scriptsJsFilePath ) ? filemtime( $scriptsJsFilePath ) : 'null';
+		?>
+		<script src="<?php echo $assetsPath ?>js/vendor<?php if ( ! $isDevMode ) { ?>.min<?php } ?>.js?v=<?php echo $vendorJsVersion ?>" defer></script>
+		<script src="<?php echo $assetsPath ?>js/scripts<?php if ( ! $isDevMode ) { ?>.min<?php } ?>.js?v=<?php echo $scriptsJsVersion ?>" defer></script>
 		
 	</body>
 	
