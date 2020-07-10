@@ -509,8 +509,9 @@ function scssConcat( cb ) {
                         for ( var j = 0; j < STACK.length; j++ ) {
                             var FILE = STACK[ j ].key;
 
-                            // check plugin path, check if '/node_modules'
-                            var PATH = FILE.indexOf( '/' ) !== 0 ? FILE.replace( '/_', '/' ).replace( '.scss', '' ) : CURRENT_SCSS_PATH + ( FILE.indexOf( '/node_modules' ) == 0 ? '' : ( CURRENT_COMPONENT_PLUGIN == 0 ? RESOURCES_PATH : '' ) + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + FILE.replace( '/_', '/' ).replace( '.scss', '' );
+                            // check plugin path (include resources path if current component plugin != 1), check if '/node_modules'
+                            var PATH = FILE.indexOf( '/' ) !== 0 ? FILE.replace( '/_', '/' ).replace( '.scss', '' ) : CURRENT_SCSS_PATH + ( FILE.indexOf( '/node_modules' ) == 0 ? '' : ( CURRENT_COMPONENT_PLUGIN != 1 ? RESOURCES_PATH : '' ) + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + FILE.replace( '/_', '/' ).replace( '.scss', '' );
+                            //var PATH = FILE.indexOf( '/' ) !== 0 ? FILE.replace( '/_', '/' ).replace( '.scss', '' ) : CURRENT_SCSS_PATH + ( FILE.indexOf( '/node_modules' ) == 0 ? '' : ( CURRENT_COMPONENT_PLUGIN == 0 ? RESOURCES_PATH : '' ) + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + FILE.replace( '/_', '/' ).replace( '.scss', '' );
 
                             LIST += '@import "' + PATH + '";\n';
                         }
