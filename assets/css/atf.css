@@ -196,13 +196,7 @@ body {
     padding-bottom: 1em; }
 
 [class*="banner-vh-"] {
-  background-color: #dee2e6;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center; }
+  background-color: #dee2e6; }
 
 .banner-inner {
   width: 100%; }
