@@ -6,7 +6,7 @@ if ( ! class_exists( 'BsxAppNavExampleNav001' ) ) {
 
 	    function printLargeExampleNav() {
 	        print('
-<ul class="bsx-appnav-navbar-nav bsx-main-navbar-nav" aria-labelledby="navbarDropdownMenuLink-0">
+<ul class="bsx-appnav-navbar-nav bsx-main-navbar-nav" aria-labelledby="toggle-navbar-collapse">
     <li class="bsx-appnav-desktop-hidden">
         <a class="" href="#"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;<span class="sr-only">Home</span></a>
     </li>
