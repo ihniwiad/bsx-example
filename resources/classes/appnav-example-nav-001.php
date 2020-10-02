@@ -264,7 +264,7 @@ if ( ! class_exists( 'BsxAppNavExampleNav001' ) ) {
 	        print('
 <ul class="bsx-appnav-navbar-nav bsx-icon-navbar-nav bsx-allmedia-dropdown-nav">
 	<li class="bsx-appnav-bigmenu-dropdown">
-		<a class="" id="navbarDropdownMenuLink-b4" href="javascript:void(0);" data-fn="dropdown-multilevel" data-fn-options="'."{ focusOnOpen: '[data-tg=\'header-search-input\']' }".'" aria-haspopup="true" aria-expanded="false" data-fn="focus-trigger"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Suche</span></a>
+		<a class="" id="navbarDropdownMenuLink-b4" href="javascript:void(0);" data-fn="dropdown-multilevel" data-fn-options="'."{ focusOnOpen: '[data-tg=\'header-search-input\']' }".'" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Suche</span></a>
 		<ul class="" aria-labelledby="navbarDropdownMenuLink-b4">
 			<li class="bsx-dropdown-item-container">
 
