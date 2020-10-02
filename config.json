@@ -28,5 +28,8 @@
 	"jsLangDestFile": 			"/resources/lang/Languages.js",
 	"scssAddVariablesDestFile": 	"/resources/scss/_components-variables.scss",
 	"scssDestFile": 				"/resources/scss/style.scss",
-	"scssAtfDestFile": 				"/resources/scss/atf.scss"
+	"scssAtfDestFile": 				"/resources/scss/atf.scss",
+	"publish": {
+		"dest": null
+	}
 }

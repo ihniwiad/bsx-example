@@ -1,3 +1,6 @@
+// TODO: update old js
+// TODO: clean
+
 const gulp          = require( 'gulp' );
 const { series, parallel } = require( 'gulp' );
 //const { src, dest } = require( 'gulp' );
@@ -23,7 +26,21 @@ const pipeline      = require( 'readable-stream' ).pipeline;
         1 -> this package
         ... -> other packages
 */
-var config = require( './config.json' );
+const config = require( './config.json' );
+
+// NOTE: within `src` all (1..n) non-negative globs must be followed by (0..n) only negative globs
+const defaultPublish = {
+    "src": [
+        "**/*",
+        "!**/node_modules",
+        "!**/node_modules/**", 
+    ],
+    "base": ".",
+    "folderName": config.projectName
+};
+const mergedPublish = Object.assign( {}, defaultPublish, config.publish );
+ // NOTE: take care at this path since you’re deleting files outside your project
+const mergedPublishDestFullPath = mergedPublish.dest + '/' + mergedPublish.folderName;
 
 
 // general
@@ -803,12 +820,40 @@ function atfCssInclude( cb ) {
     cb();
 }
 
-function publish( cb ) {
+function publishFolderDelete( cb ) {
 
-    // TODO copy adapted php files
+    if ( !! mergedPublish.dest && !! mergedPublish.folderName ) {
+        return gulp.src( mergedPublishDestFullPath, { read: false, allowEmpty: true } )
+            .pipe( clean( { force: true } ) ) // NOTE: take care at this command since you’re deleting files outside your project
+        ;
+    }
+    else {
+        // do nothing
+    }
 
     cb();
 }
+
+function publishFolderCreate( cb ) {
+
+    if ( !! mergedPublish.dest && !! mergedPublish.folderName ) {
+        return gulp.src( mergedPublish.src, { base: mergedPublish.base } )
+            .pipe( gulp.dest( mergedPublishDestFullPath ) )
+        ;
+    }
+    else {
+        // log note, do nothing
+        console.log( 'Note: No publishing done since publish configuration empty.' );
+    }
+
+    cb();
+}
+
+exports.publish = series(
+    // copy all project but `node_modules` to configured dest
+    publishFolderDelete,
+    publishFolderCreate
+);
 
 exports.build = series(
     filesStackPrepare,
@@ -826,7 +871,8 @@ exports.build = series(
     ),
     parallel( cssCleanAndMinify, jsMinify ),
     atfCssInclude,
-    publish
+    publishFolderDelete,
+    publishFolderCreate
 );
 
 exports.files_copy = series(
@@ -849,7 +895,8 @@ exports.css = series(
     scssToCss,
     cssCleanAndMinify,
     atfCssInclude,
-    publish
+    publishFolderDelete,
+    publishFolderCreate
 );
 
 
