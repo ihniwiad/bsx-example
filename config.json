@@ -30,6 +30,6 @@
 	"scssDestFile": 				"/resources/scss/style.scss",
 	"scssAtfDestFile": 				"/resources/scss/atf.scss",
 	"publish": {
-		"dest": null
+		"dest": "../../../../../Applications/MAMP/htdocs/"
 	}
 }
