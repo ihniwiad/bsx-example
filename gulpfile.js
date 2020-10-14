@@ -849,18 +849,51 @@ function publishFolderCreate( cb ) {
     cb();
 }
 
-exports.publish = series(
-    // copy all project but `node_modules` to configured dest
-    publishFolderDelete,
-    publishFolderCreate
-);
 
-exports.build = series(
+// tasks
+
+const files = series(
     filesStackPrepare,
     filesCopy,
+);
+
+const php = series(
     phpClassesStackPrepare,
     phpClassesCopy,
     phpClassesInclude,
+);
+
+const js = series(
+    jsFolderClean,
+    parallel(
+        series( jsVendorStackPrepare, vendorJsConcat ),
+        series( jsStackPrepare, jsConcat )
+    ),
+    jsMinify,
+);
+
+const css = series(
+    files,
+    projectNameReplace,
+    cssFolderClean,
+    scssConcat,
+    scssToCss,
+    cssCleanAndMinify,
+    atfCssInclude,
+);
+
+const publish = series(
+    // copy all project but `node_modules` to configured dest
+    publishFolderDelete,
+    publishFolderCreate,
+);
+
+
+// exports
+
+exports.build = series(
+    files,
+    php,
     projectNameReplace,
     parallel( cssFolderClean, jsFolderClean ),
     scssConcat,
@@ -871,32 +904,29 @@ exports.build = series(
     ),
     parallel( cssCleanAndMinify, jsMinify ),
     atfCssInclude,
-    publishFolderDelete,
-    publishFolderCreate
+    publish,
 );
 
-exports.files_copy = series(
-    filesStackPrepare,
-    filesCopy
+exports.files = series(
+    files,
+    publish,
 );
 
 exports.php = series(
-    phpClassesStackPrepare,
-    phpClassesCopy,
-    phpClassesInclude
+    php,
+    publish,
 );
 
 exports.css = series(
-    filesStackPrepare,
-    filesCopy,
-    projectNameReplace,
-    cssFolderClean,
-    scssConcat,
-    scssToCss,
-    cssCleanAndMinify,
-    atfCssInclude,
-    publishFolderDelete,
-    publishFolderCreate
+    css,
+    publish,
 );
+
+exports.js = series(
+    js,
+    publish,
+);
+
+exports.publish = publish;
 
 
