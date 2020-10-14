@@ -80,12 +80,20 @@ var BSX_UTILS = ( function( $ ) {
     Utils.$targetElems = $functionAndTargetElems.filter( Utils.selectors.targetElement );
 
     // anchors offset top
-    var anchorOffsetTopSelector = '[data-fn="anchor-offset-elem"]';
+    var anchorOffsetTopSelector = '[data-fn~="anchor-offset-elem"]';
     var anchorOffsetTopDistance = 20;
     var $anchorOffsetTopElem = Utils.$functionElems.filter( anchorOffsetTopSelector );
 
     $.fn._getAnchorOffset = function() {
-        return ( ( $anchorOffsetTopElem.length > 0 ) ? this.outerHeight() : 0 ) + anchorOffsetTopDistance;
+        // if header element position is fixed scroll below header
+
+        var offsetTop = anchorOffsetTopDistance;
+
+        if ( $anchorOffsetTopElem.length > 0 && $anchorOffsetTopElem.css( 'position' ) == 'fixed' ) {
+            offsetTop += $anchorOffsetTopElem.outerHeight();
+        }
+
+        return offsetTop;
     }
 
     Utils.anchorOffsetTop = $anchorOffsetTopElem._getAnchorOffset();
