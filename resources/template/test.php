@@ -3,6 +3,17 @@
 		
 			<main id="main">
 
+				<?php 
+					if ( class_exists( 'BsxBannersExampleVhBanner001' ) ) {
+						$BsxBannersExampleVhBanner = new BsxBannersExampleVhBanner001;
+
+						if ( method_exists( $BsxBannersExampleVhBanner, 'printExampleVhBanner001' ) ) {
+							$BsxBannersExampleVhBanner->printExampleVhBanner001( $assetsPath, 2 );
+						}
+					}
+				?>
+
+<!--
 				<div class="below-navbar-content d-flex align-items-center bg-fixed bg-cover banner-vh-2 bg-c25" style="background-image: url('<?php echo $assetsPath ?>example-img/example-banner-007-lr.jpg');" data-fn="lazyload" data-src="<?php echo $assetsPath ?>example-img/example-banner-007.jpg">
 
 					<div class="banner-inner">
@@ -10,23 +21,13 @@
 						<div class="container py-4">
 
 							<h1 class="display-1 text-white text-shadow-darker">Lorem ipsum</h1>
-
-							<!-- form class="banner-form display-3 mt-4">
-								<label class="sr-only" for="bannerSearchInput">Suchen</label>
-								<div class="input-group input-group-lg">
-									<input class="form-control" id="bannerSearchInput" type="text" placeholder="Suchbegriff eingeben">
-									<span class="input-group-append">
-										<button class="btn btn-secondary" type="submit"><i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Suchen</span></button>
-									</span>
-								</div>
-							</form -->
 							
 						</div>
 
 					</div>
 
 				</div>
-
+-->
 		
 				<div class="container">
 
