@@ -11146,7 +11146,7 @@ a.text-dark:hover, a.text-dark:focus {
   margin-bottom: 0.33333rem; }
 
 .below-navbar-content {
-  padding-top: 5rem; }
+  padding-top: 5rem !important; }
 
 .main-container-banner {
   margin-top: 0.5rem; }
