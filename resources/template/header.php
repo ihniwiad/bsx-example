@@ -7,6 +7,7 @@
 
 	$rootPath = './../../';
 	$resourcesPath = 'resources/';
+	$templatePartsPath = 'template-parts/';
 
 	$relativeAssetsPath = 'assets/';
 	$assetsPath = $rootPath . 'assets/';
@@ -58,7 +59,7 @@
 		<title>bsx Template</title>
 
 		<!-- atf style -->
-		<?php include 'template-parts/atf-style.php'; ?>
+		<?php include $templatePartsPath . 'atf-style.php'; ?>
 		
 		<!-- css -->
 		<?php

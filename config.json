@@ -14,6 +14,7 @@
 		"de",
 		"en"
 	],
+	"logoPath": "/assets/img/ci/logo/logo.svg",
 	"cssDestPath": 			"/assets/css",
 	"jsDestPath": 			"/assets/js",
 	"fontsDestFolder": 		"/assets/fonts",

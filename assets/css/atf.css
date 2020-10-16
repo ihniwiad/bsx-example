@@ -78,7 +78,8 @@ body {
   max-width: 40vw; }
   .bsx-appnav-navbar-brand:hover, .bsx-appnav-navbar-brand:focus {
     text-decoration: none; }
-  .bsx-appnav-navbar-brand img {
+  .bsx-appnav-navbar-brand img,
+  .bsx-appnav-navbar-brand svg {
     max-width: 100%;
     height: auto; }
 

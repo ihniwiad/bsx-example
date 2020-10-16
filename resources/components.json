@@ -4,6 +4,9 @@
 			"key": "/template/template-parts-atf-style"
 		},
 		{
+			"key": "/template/template-parts-inline-svg-logo"
+		},
+		{
 			"key": "/scss/global-mixins-breakpoints"
 		},
 		{

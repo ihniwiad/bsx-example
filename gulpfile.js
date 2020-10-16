@@ -61,134 +61,65 @@ const JS_DEST_PATH = checkAdDotBefore( config.jsDestPath );
 const VENDOR_FILE_NAME  = 'vendor.js';
 const SCRIPTS_FILE_NAME = 'scripts.js';
 // script files stack
-var SCRIPTS_STACK = [];
-var VENDOR_STACK = [];
+const SCRIPTS_STACK = [];
+const VENDOR_STACK = [];
 
-// lang
+// TODO: lang
 //const LANG_DEST_PATH = '.' + RESOURCES_PATH + '/lang';
 //const JS_LANG_DEST_FILE = './resources/lang/Languages.js';
 
-// copy files
-// special file destinations used by filesStackPrepare() according to types (e.g. 'font', 'template', 'template-part')
-const FONTS_DEST_FOLDER = config.fontsDestFolder;
-const TEMPLATE_DEST_FOLDER = config.templateDestFolder;
-const TEMPLATE_PARTS_DEST_FOLDER = config.templatePartsDestFolder;
-const IMG_DEST_FOLDER = config.imgDestFolder;
-const EXAMPLE_IMG_DEST_FOLDER = config.exampleImgDestFolder;
 // copy files stack
-var FILE_STACK = [];
+const FILE_STACK = [];
 
 // php classes
-var PHP_CLASSES_FILES_STACK = [];
-var PHP_CLASSES_LIST = [];
+const PHP_CLASSES_FILES_STACK = [];
+const PHP_CLASSES_LIST = [];
 
-// plugin data
-//const PLUGIN_DATA_PATH = './config.json';
-//const PLUGIN_DATA = JSON.parse( fs.readFileSync( PLUGIN_DATA_PATH ) );
+// project name
 const PROJECT_NAME = config.projectName;
 
-// template files path (to replace plugin name or include atf style)
-const TEMPLATE_DATA_PATH = checkAdDotBefore( config.templateSrcFolder );
+// replace project specific patters
 const REPLACE_PROJECT_NAME_PATTERN = /###PROJECT_NAME###/g;
 // prepare include atf style
 const INCLUDE_COMPRESSED_ATF_STYLE_PATTERN = /###COMPRESSED_ATF_STYLE###/g;
 const INCLUDE_ATF_STYLE_PATTERN = /###ATF_STYLE###/g;
+// include logo as inline svg and path
+const INLINE_LOGO_PATTERN = /###INLINE_LOGO###/g;
+//const LOGO_PATH_PATTERN = /###LOGO_PATH###/g;
 
 // log for testing (LOG_FILE_PATH)
-var LOG = '';
-var LOG_FILE_PATH = './resources/log.txt';
+let LOG = '';
+const LOG_FILE_PATH = './resources/log.txt';
 
 
-// FUNCTIONS
+// basic functions
+
 function checkAdDotBefore( path ) {
-    path = ( path.indexOf( '.' ) != 0 ) ? '.' + path :  path;
-    return path;
+    return ( path.indexOf( '.' ) != 0 ) ? '.' + path :  path;
 }
 function splitFilePath( path ) {
-    var fileName = ''; 
-    var filePath;
-    var pathSegments = path.split( PATH_SEPARATOR );
+    let fileName = ''; 
+    let filePath;
+    const pathSegments = path.split( PATH_SEPARATOR );
     if ( pathSegments[ pathSegments.length - 1 ].indexOf( FILE_EXTENSION_SEPARATOR ) > -1 ) {
         fileName = pathSegments.pop();
     }
     filePath = pathSegments.join( PATH_SEPARATOR ) + ( fileName != '' ? PATH_SEPARATOR : '' );
     return [ filePath, fileName ];
 }
-function splitFileName( path ) {
-    var fileName = null;
-    var fileNameTrunk = '';
-    var fileExtension;
-    var pathSegments = path.split( PATH_SEPARATOR );
-    if ( pathSegments[ pathSegments.length - 1 ].indexOf( FILE_EXTENSION_SEPARATOR ) > -1 ) {
-        fileName = pathSegments.pop();
-    }
-    var fileNameSegments = fileName.split( FILE_EXTENSION_SEPARATOR );
-    fileExtension = fileNameSegments.pop();
-    fileNameTrunk = fileNameSegments.join( FILE_EXTENSION_SEPARATOR );
-    return [ fileNameTrunk, fileExtension ];
-}
 function merge( obj_1, obj_2 ) {
-    var merged = {};
-    for ( var key in obj_1 ) {
+    const merged = {};
+    for ( let key in obj_1 ) {
         merged[ key ] = obj_1[ key ];
     }
-    for ( var key in obj_2 ) {
+    for ( let key in obj_2 ) {
         merged[ key ] = obj_2[ key ];
     }
     return merged;
 }
-function htmlEntities( str ) {
-    return String( str ).replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' ).replace( /"/g, '&quot;' );
-}
-function insertTagsByChar( str, char, tag_0, tag_1 ) {
-    var strExplode = str.split( char );
-    var strRebuilt = '';
-    var tagOpen = false;
-    for ( var i = 0; i < strExplode.length; i++ ) {
-        if ( i < strExplode.length - 1 ) {
-            // check escape (char before is not “\”)
-            if ( ! strExplode[ i ].match( /\\$/ ) ) {
-                // inset tags
-                if ( ! tagOpen ) {
-                    // open
-                    strRebuilt += strExplode[ i ] + tag_0;
-                }
-                else {
-                    // close
-                    strRebuilt += strExplode[ i ] + tag_1;
-                }
-                tagOpen = ! tagOpen;
-            }
-            else {
-                // do not insert tags
-                strRebuilt += strExplode[ i ] + char;
-            }
-        }
-        else {
-            strRebuilt += strExplode[ i ]
-        }
-    }
-    // close if still open (in case of error)
-    if ( tagOpen ) {
-        // close
-        strRebuilt += strExplode[ i ] + tag_1;
-    }
-    return strRebuilt;
-}
-function parseMarkdown( str ) {
-    var strRebuilt = str;
-    strRebuilt = insertTagsByChar( strRebuilt, '**', '<strong>', '</strong>' );
-    strRebuilt = insertTagsByChar( strRebuilt, '*', '<em>', '</em>' );
-    strRebuilt = insertTagsByChar( strRebuilt, '`', '<code class="kbd">', '</code>' );
-    // TODO: should `\\` remain as `\`?
-    // remove all backslashes
-    strRebuilt = strRebuilt.replace( /\\/g, '' );
-    return strRebuilt;
-}
 
 
-
-// GULP 4 RESTRUCTURED
+// task functions
 
 function filesStackPrepare( cb ) {
 
@@ -221,19 +152,19 @@ function filesStackPrepare( cb ) {
                     // type is set, chose what to do
                     switch( CURRENT_FILE_SRC ) {
                         case 'font':
-                            CURRENT_FILE_DEST_FOLDER = FONTS_DEST_FOLDER;
+                            CURRENT_FILE_DEST_FOLDER = checkAdDotBefore( config.fontsDestFolder );
                             break;
                         case 'template':
-                            CURRENT_FILE_DEST_FOLDER = TEMPLATE_DEST_FOLDER;
+                            CURRENT_FILE_DEST_FOLDER = checkAdDotBefore( config.templateDestFolder );
                             break;
                         case 'template-parts':
-                            CURRENT_FILE_DEST_FOLDER = TEMPLATE_PARTS_DEST_FOLDER;
+                            CURRENT_FILE_DEST_FOLDER = checkAdDotBefore( config.templatePartsDestFolder );
                             break;
                         case 'img':
-                            CURRENT_FILE_DEST_FOLDER = IMG_DEST_FOLDER;
+                            CURRENT_FILE_DEST_FOLDER = checkAdDotBefore( config.imgDestFolder );
                             break;
                         case 'example-img':
-                            CURRENT_FILE_DEST_FOLDER = EXAMPLE_IMG_DEST_FOLDER;
+                            CURRENT_FILE_DEST_FOLDER = checkAdDotBefore( config.exampleImgDestFolder );
                             break;
                     } 
                 }
@@ -242,8 +173,7 @@ function filesStackPrepare( cb ) {
                 var CURRENT_FILE_DEST = CURRENT_FILE_STACK[ j ].dest;
 
                 var ADAPTED_FILE_SRC = CURRENT_COMPONENT_SRC_PLUGIN_PATH + ( ( CURRENT_FILE_SRC.indexOf( '/node_modules' ) == 0 || CURRENT_FILE_SRC.indexOf( RESOURCES_PATH ) == 0 ) ? '' : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_SRC;
-                //var ADAPTED_FILE_DEST = ( ( CURRENT_FILE_DEST.indexOf( RESOURCES_PATH ) == 0 || CURRENT_FILE_DEST.indexOf( ASSETS_PATH ) == 0 || CURRENT_FILE_DEST_FOLDER != '' ) ? '.' + CURRENT_FILE_DEST_FOLDER : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_DEST;
-                var ADAPTED_FILE_DEST = checkAdDotBefore( CURRENT_FILE_DEST_FOLDER ) + CURRENT_FILE_DEST;
+                var ADAPTED_FILE_DEST = CURRENT_FILE_DEST_FOLDER + CURRENT_FILE_DEST;
                 
                 FILE_STACK.push( {
                     src: ADAPTED_FILE_SRC,
@@ -343,10 +273,8 @@ function phpClassesStackPrepare( cb ) {
                 // remember class file name
                 PHP_CLASSES_LIST.push( CURRENT_FILE_NAME );
 
-                var PHP_CLASSES_DEST_FOLDER = config.phpClassesDestFolder;
-
                 var ADAPTED_FILE_SRC = CURRENT_COMPONENT_SRC_PLUGIN_PATH + ( ( CURRENT_FILE_SRC.indexOf( '/node_modules' ) == 0 || CURRENT_FILE_SRC.indexOf( RESOURCES_PATH ) == 0 ) ? '' : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_SRC;
-                var ADAPTED_FILE_DEST = checkAdDotBefore( PHP_CLASSES_DEST_FOLDER ) + '/' + CURRENT_FILE_NAME;
+                var ADAPTED_FILE_DEST = checkAdDotBefore( config.phpClassesDestFolder ) + '/' + CURRENT_FILE_NAME;
                 
                 // remember src & dest
                 PHP_CLASSES_FILES_STACK.push( {
@@ -449,7 +377,7 @@ function projectNameReplace( cb ) {
 
     var PROJECT_NAME_FILE_STACK = [
         {
-            PATH: TEMPLATE_DATA_PATH,
+            PATH: checkAdDotBefore( config.templateDestFolder ),
             FILES: '/**/*.php'
         }
     ];
@@ -459,6 +387,34 @@ function projectNameReplace( cb ) {
         stream = gulp.src( PROJECT_NAME_FILE_STACK[ i ].PATH + PROJECT_NAME_FILE_STACK[ i ].FILES )
             .pipe( replace( REPLACE_PROJECT_NAME_PATTERN, PROJECT_NAME ) )
             .pipe( gulp.dest( PROJECT_NAME_FILE_STACK[ i ].PATH ) )
+        ;
+    }
+
+    return stream;
+
+    cb();
+}
+
+function logoReplace( cb ) {
+
+    const LOGO_FILE_STACK = [
+        {
+            PATH: checkAdDotBefore( config.templateDestFolder ),
+            FILES: '/**/*.php'
+        },
+        {
+            PATH: checkAdDotBefore( config.phpClassesDestFolder ),
+            FILES: '/**/*.php'
+        }
+    ];
+
+    const INLINE_LOGO = fs.readFileSync( checkAdDotBefore( config.logoPath ) );
+
+    let stream;
+    for ( var i = 0; i < LOGO_FILE_STACK.length; i++ ) {
+        stream = gulp.src( LOGO_FILE_STACK[ i ].PATH + LOGO_FILE_STACK[ i ].FILES )
+            .pipe( replace( INLINE_LOGO_PATTERN, INLINE_LOGO ) )
+            .pipe( gulp.dest( LOGO_FILE_STACK[ i ].PATH ) )
         ;
     }
 
@@ -792,7 +748,7 @@ function atfCssInclude( cb ) {
 
     var ATF_STYLE_FILE_STACK = [
         {
-            PATH: TEMPLATE_DATA_PATH,
+            PATH: checkAdDotBefore( config.templateDestFolder ),
             FILES: '/**/*.php'
         }
     ];
@@ -895,6 +851,7 @@ exports.build = series(
     files,
     php,
     projectNameReplace,
+    logoReplace,
     parallel( cssFolderClean, jsFolderClean ),
     scssConcat,
     parallel(
@@ -909,6 +866,11 @@ exports.build = series(
 
 exports.files = series(
     files,
+    publish,
+);
+
+exports.logo = series(
+    logoReplace,
     publish,
 );
 
