@@ -10781,13 +10781,14 @@ a.text-dark:hover, a.text-dark:focus {
       top: 100%;
       left: 0;
       padding: 0.25em 0;
-      clip: rect(0px, 100000px, 100000px, -1000px);
-      max-height: calc(100vh - 5rem);
-      overflow: auto; }
+      clip: rect(0px, 100000px, 100000px, -1000px); }
       .bsx-appnav-navbar-nav:not(.bsx-allmedia-dropdown-nav) > li > ul ul {
         top: -0.25em;
         left: 100%;
         padding: 0.25em 0 0.25em; }
+    .bsx-appnav-navbar-nav:not(.bsx-allmedia-dropdown-nav) > li.bsx-appnav-bigmenu-dropdown > ul {
+      max-height: calc(100vh - 5rem);
+      overflow: auto; }
   .bsx-appnav-navbar-nav:not(.bsx-allmedia-dropdown-nav) > li > ul,
   .bsx-appnav-navbar-nav:not(.bsx-allmedia-dropdown-nav) li:not(.bsx-appnav-bigmenu-dropdown) li > ul {
     position: absolute;
@@ -11069,13 +11070,14 @@ a.text-dark:hover, a.text-dark:focus {
     top: 100%;
     left: 0;
     padding: 0.25em 0;
-    clip: rect(0px, 100000px, 100000px, -1000px);
-    max-height: calc(100vh - 5rem);
-    overflow: auto; }
+    clip: rect(0px, 100000px, 100000px, -1000px); }
     .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav > li > ul ul {
       top: -0.25em;
       left: 100%;
       padding: 0.25em 0 0.25em; }
+  .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav > li.bsx-appnav-bigmenu-dropdown > ul {
+    max-height: calc(100vh - 5rem);
+    overflow: auto; }
 
 .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav > li > ul,
 .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav li:not(.bsx-appnav-bigmenu-dropdown) li > ul {
