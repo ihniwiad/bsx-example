@@ -1,0 +1,12 @@
+{
+	"scss": {
+		"use": [
+			{
+				"key": "/scss/template-variables"
+			}
+		]
+	},
+	"js": null,
+	"view": null,
+	"copyFiles": null
+}

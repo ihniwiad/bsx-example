@@ -28,6 +28,32 @@
 
 				</div>
 -->
+
+
+				<div class="my-5">
+					<h2 class="mb-4">TEST</h2>
+<!--
+[ { media: '(min-width: 2000px)', url: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/10/kalen-emsley-7bwQXzbF6KE-unsplash-compressed-scaled.jpg' }, { media: '(min-width: 1200px)', url: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/10/kalen-emsley-7bwQXzbF6KE-unsplash-compressed-1536x1024.jpg' }, { media: '(min-width: 768px)', url: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/10/kalen-emsley-7bwQXzbF6KE-unsplash-compressed-1024x683.jpg' }, { media: '', url: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/10/kalen-emsley-7bwQXzbF6KE-unsplash-compressed-768x512.jpg' } ]
+-->
+
+<div class="wp-block-bsx-blocks-banner banner-vh-2 below-navbar-content bg-fixed bg-cover bg-c d-flex align-items-center mb-5" data-fn="lazyload" data-src="http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/10/kalen-emsley-7bwQXzbF6KE-unsplash-compressed-1024x683.jpg" data-srcset="[ { media: '(min-width: 1400px)', src: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/10/kalen-emsley-7bwQXzbF6KE-unsplash-compressed-scaled.jpg' }, { media: '(min-width: 1000px)', src: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/10/kalen-emsley-7bwQXzbF6KE-unsplash-compressed-1536x1024.jpg' } ]">
+	<div class="banner-inner">
+		<div class="wp-block-bsx-blocks-container container">
+			<h1 class="display-1 text-white text-shadow-darker">Lorem ipsum</h1>
+		</div>
+	</div>
+</div>
+
+<div class="wp-block-bsx-blocks-banner banner-vh-2 below-navbar-content bg-fixed bg-cover bg-c d-flex align-items-center mb-5" data-fn="lazyload" data-src="http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/07/george-alexandru-novac-hq0y1QZn0k-unsplash-3000x1601-1-1024x546.jpg" data-srcset="[ { media: '(min-width: 1400px)', src: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/07/george-alexandru-novac-hq0y1QZn0k-unsplash-3000x1601-1-scaled.jpg' }, { media: '(min-width: 1000px)', src: 'http://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/07/george-alexandru-novac-hq0y1QZn0k-unsplash-3000x1601-1-1536x820.jpg' } ]">
+	<div class="banner-inner">
+		<div class="wp-block-bsx-blocks-container container">
+			<h1 class="display-1 text-white text-shadow-darker">Lorem ipsum</h1>
+		</div>
+	</div>
+</div>
+
+				</div>
+
 		
 				<div class="container">
 

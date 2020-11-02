@@ -16,16 +16,16 @@
 		?>
 		
 		<?php
-			// vendor js file version
-			$vendorJsFilePath = $rootRelatedAssetsPath . 'js/vendor.min.js';
-			$vendorJsVersion = file_exists( $vendorJsFilePath ) ? filemtime( $vendorJsFilePath ) : 'null';
-
-			// scripts js file version
-			$scriptsJsFilePath = $rootRelatedAssetsPath . 'js/scripts.min.js';
-			$scriptsJsVersion = file_exists( $scriptsJsFilePath ) ? filemtime( $scriptsJsFilePath ) : 'null';
+			// js paths using relative path & version
+			$currentVendorJsFilePath = $assetsPath . $vendorJsFileName . '?v=' . $vendorJsVersion;
+			$currentScriptsJsFilePath = $assetsPath . $scriptsJsFileName . '?v=' . $scriptsJsVersion;
+			if ( $isDevMode ) {
+				$currentVendorJsFilePath = str_replace ( '.min', '' , $currentVendorJsFilePath );
+				$currentScriptsJsFilePath = str_replace ( '.min', '' , $currentScriptsJsFilePath );
+			}
 		?>
-		<script src="<?php echo $assetsPath ?>js/vendor<?php if ( ! $isDevMode ) { ?>.min<?php } ?>.js?v=<?php echo $vendorJsVersion ?>" defer></script>
-		<script src="<?php echo $assetsPath ?>js/scripts<?php if ( ! $isDevMode ) { ?>.min<?php } ?>.js?v=<?php echo $scriptsJsVersion ?>" defer></script>
+		<script src="<?php echo $currentVendorJsFilePath ?>" defer></script>
+		<script src="<?php echo $currentScriptsJsFilePath ?>" defer></script>
 		
 	</body>
 	

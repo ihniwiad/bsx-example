@@ -196,6 +196,9 @@ body {
     padding-top: 1em;
     padding-bottom: 1em; }
 
+[class*="banner-st-"] {
+  background-color: #dee2e6; }
+
 [class*="banner-vh-"] {
   background-color: #dee2e6; }
 

@@ -126,7 +126,7 @@ function filesStackPrepare( cb ) {
     var COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
-        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
+        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].package || 0;
         var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
@@ -246,7 +246,7 @@ function phpClassesStackPrepare( cb ) {
     var COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
-        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
+        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].package || 0;
         var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
@@ -273,8 +273,10 @@ function phpClassesStackPrepare( cb ) {
                 // remember class file name
                 PHP_CLASSES_LIST.push( CURRENT_FILE_NAME );
 
+                var PHP_CLASSES_DEST_FOLDER = config.phpClassesDestFolder;
+
                 var ADAPTED_FILE_SRC = CURRENT_COMPONENT_SRC_PLUGIN_PATH + ( ( CURRENT_FILE_SRC.indexOf( '/node_modules' ) == 0 || CURRENT_FILE_SRC.indexOf( RESOURCES_PATH ) == 0 ) ? '' : RESOURCES_PATH + COMPONENTS_PATH + CURRENT_COMPONENT_PATH ) + CURRENT_FILE_SRC;
-                var ADAPTED_FILE_DEST = checkAdDotBefore( config.phpClassesDestFolder ) + '/' + CURRENT_FILE_NAME;
+                var ADAPTED_FILE_DEST = checkAdDotBefore( PHP_CLASSES_DEST_FOLDER ) + '/' + CURRENT_FILE_NAME;
                 
                 // remember src & dest
                 PHP_CLASSES_FILES_STACK.push( {
@@ -350,13 +352,13 @@ function phpClassesInclude( cb ) {
 
     // include all php classes files within one file
 
-    var COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
+    const COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
 
-    var FILE_CONTENT = '<?php \n';
+    let FILE_CONTENT = '<?php \n';
 
-    var PHP_CLASSES_DEST_FILE = checkAdDotBefore( config.phpClassesDestFile );
+    const PHP_CLASSES_DEST_FILE = checkAdDotBefore( config.phpClassesDestFile );
 
-    for ( var i = 0; i < PHP_CLASSES_LIST.length; i++ ) {
+    for ( let i = 0; i < PHP_CLASSES_LIST.length; i++ ) {
 
         FILE_CONTENT += 'include \'' + PHP_CLASSES_LIST[ i ] + '\';\n';
 
@@ -375,15 +377,15 @@ function phpClassesInclude( cb ) {
 
 function projectNameReplace( cb ) {
 
-    var PROJECT_NAME_FILE_STACK = [
+    const PROJECT_NAME_FILE_STACK = [
         {
-            PATH: checkAdDotBefore( config.templateDestFolder ),
+            PATH: checkAdDotBefore( config.templatePartsDestFolder ),
             FILES: '/**/*.php'
         }
     ];
 
-    var stream;
-    for ( var i = 0; i < PROJECT_NAME_FILE_STACK.length; i++ ) {
+    let stream;
+    for ( let i = 0; i < PROJECT_NAME_FILE_STACK.length; i++ ) {
         stream = gulp.src( PROJECT_NAME_FILE_STACK[ i ].PATH + PROJECT_NAME_FILE_STACK[ i ].FILES )
             .pipe( replace( REPLACE_PROJECT_NAME_PATTERN, PROJECT_NAME ) )
             .pipe( gulp.dest( PROJECT_NAME_FILE_STACK[ i ].PATH ) )
@@ -399,7 +401,7 @@ function logoReplace( cb ) {
 
     const LOGO_FILE_STACK = [
         {
-            PATH: checkAdDotBefore( config.templateDestFolder ),
+            PATH: checkAdDotBefore( config.templatePartsDestFolder ),
             FILES: '/**/*.php'
         },
         {
@@ -411,7 +413,7 @@ function logoReplace( cb ) {
     const INLINE_LOGO = fs.readFileSync( checkAdDotBefore( config.logoPath ) );
 
     let stream;
-    for ( var i = 0; i < LOGO_FILE_STACK.length; i++ ) {
+    for ( let i = 0; i < LOGO_FILE_STACK.length; i++ ) {
         stream = gulp.src( LOGO_FILE_STACK[ i ].PATH + LOGO_FILE_STACK[ i ].FILES )
             .pipe( replace( INLINE_LOGO_PATTERN, INLINE_LOGO ) )
             .pipe( gulp.dest( LOGO_FILE_STACK[ i ].PATH ) )
@@ -456,7 +458,7 @@ function scssConcat( cb ) {
     if ( !! COMPONENTS_JSON && !! COMPONENTS_JSON.use ) {
 
         for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
-            var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
+            var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].package || 0;
             var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
             var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
@@ -589,7 +591,7 @@ function jsStackPrepare( cb ) {
     var COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
-        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
+        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].package || 0;
         var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
@@ -638,7 +640,7 @@ function jsVendorStackPrepare( cb ) {
     var COMPONENTS_JSON = JSON.parse( fs.readFileSync( COMPONENTS_CONFIG_FILE_PATH ) );
 
     for ( var i = 0; i < COMPONENTS_JSON.use.length; i++ ) {
-        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].plugin || 0;
+        var CURRENT_COMPONENT_PLUGIN = COMPONENTS_JSON.use[ i ].package || 0;
         var CURRENT_PLUGIN_PATH = config.relatedPackages[ CURRENT_COMPONENT_PLUGIN ].path;
         var CURRENT_COMPONENT_PATH = COMPONENTS_JSON.use[ i ].key;
 
@@ -737,33 +739,24 @@ function jsMinify( cb ) {
 
 function atfCssInclude( cb ) {
 
-    // TODO replace ###ATF_STYLE###
-
-    /*
-        - read atf.css
-        - read atf.min.css
-        - replace INCLUDE_ATF_STYLE_PATTERN
-        - replace INCLUDE_COMPRESSED_ATF_STYLE_PATTERN
-    */
-
-    var ATF_STYLE_FILE_STACK = [
+    const ATF_STYLE_FILE_STACK = [
         {
-            PATH: checkAdDotBefore( config.templateDestFolder ),
+            PATH: checkAdDotBefore( config.templatePartsDestFolder ),
             FILES: '/**/*.php'
         }
     ];
 
     // TODO: read atf style files (SCSS_ATF_DEST_FILE, SCSS_ATF_DEST_FILE.replace( '.css', '.min.css' ) ), include content
 
-    var COMPRESSED_ATF_STYLE = fs.readFileSync( CSS_DEST_PATH + '/atf.min.css' );
-    var ATF_STYLE = fs.readFileSync( CSS_DEST_PATH + '/atf.css' );
+    const COMPRESSED_ATF_STYLE = fs.readFileSync( CSS_DEST_PATH + '/atf.min.css' );
+    const ATF_STYLE = fs.readFileSync( CSS_DEST_PATH + '/atf.css' );
 
     //LOG += COMPRESSED_ATF_STYLE + '\n';
     //LOG += ATF_STYLE + '\n';
     //fs.writeFileSync( LOG_FILE_PATH, LOG );
 
-    var stream;
-    for ( var i = 0; i < ATF_STYLE_FILE_STACK.length; i++ ) {
+    let stream;
+    for ( let i = 0; i < ATF_STYLE_FILE_STACK.length; i++ ) {
         stream = gulp.src( ATF_STYLE_FILE_STACK[ i ].PATH + ATF_STYLE_FILE_STACK[ i ].FILES )
             .pipe( replace( INCLUDE_COMPRESSED_ATF_STYLE_PATTERN, COMPRESSED_ATF_STYLE ) )
             .pipe( replace( INCLUDE_ATF_STYLE_PATTERN, ATF_STYLE ) )
@@ -805,6 +798,165 @@ function publishFolderCreate( cb ) {
     cb();
 }
 
+// search pattern – include `@font-face` followed by letters, numbers, minus, underscore, dot, colon, double quote, single quote, semicolon, slash, ... ,line break, tab
+const CSS_FONTS_REPLACE_PATTERN = /@font-face+([a-zA-Z0-9-/-_.:;,"'/(){ ?=#&\n\t])*/g;
+const REPLACE_PRELOADS_PATTERN = /###FONTS_PRELOADS###/; // replace only first occurance, do not use `/g`
+
+const preloadFontsReplace = ( cb ) => {
+
+    // this function needs to be executed after css has been built
+
+    // TODO: How to get file name? From config or from .scss file?
+    const cssFileContent = String( fs.readFileSync( CSS_DEST_PATH + '/style.min.css' ) );
+
+    const allowedFormats = [ 'woff2' ]; //, 'woff'
+
+    const fontsList = [];
+
+    const fontsSnippets = cssFileContent.match( CSS_FONTS_REPLACE_PATTERN );
+
+    // TEST – TODO: remove
+    fontsSnippets.forEach( ( fontSnippet, index ) => {
+
+        //console.log( index + ': ' + fontSnippet );
+
+        // extract font sources – get content between `src:` and `;`
+        const fontSrcList = fontSnippet.split( 'src:' );
+        const lastFontSrc = fontSrcList[ fontSrcList.length - 1 ].split( ';' )[ 0 ];
+
+        const singleFontExplode = lastFontSrc.split( ',' );
+
+        for ( let j = 0; j < singleFontExplode.length; j++ ) {
+            // extract each font’s url and format
+
+            const urlFormatExplode = singleFontExplode[ j ].split( ' ' );
+
+            let url = urlFormatExplode[ 0 ].replace( 'url(', '' ).replace( ')', '' ).replace( '../', '' );
+
+            // TODO: How to manage path in case of further changes?
+
+            // remove duplicate path segments
+            /*
+            const fontsPathSegments = config.fontsDestFolder.split( '/' );
+            for ( let k = fontsPathSegments.length - 1; k >= 0; k-- ) {
+
+                //console.log( fontsPathSegments[ k ] );
+
+                if ( url.indexOf( fontsPathSegments[ k ] ) == 0 ) {
+                    url = url.substring( fontsPathSegments[ k ].length + 1 ); // remove slash too
+                }
+                else break;
+            }
+            */
+
+            const format = urlFormatExplode[ 1 ].replace( 'format("', '' ).replace( '")', '' );
+
+            //console.log( i + ': \nurl: ' + url + ' \nformat: ' + format );
+
+            // check if allowed format, then push to list
+
+            if ( allowedFormats.indexOf( format ) != -1 ) {
+                fontsList.push(
+                    {
+                        url: url,
+                        format: format,
+                    }
+                );
+            } 
+        }
+
+    } ); 
+
+    // remove duplicates (caused by different css font names for same font file)
+    const uniqueFontsList = [ ...new Map( fontsList.map( item => [ item[ 'url' ], item ] ) ).values() ];
+
+    // TEST – TODO: remove
+    uniqueFontsList.forEach( ( item, index ) => {
+        //console.log( index + ': ' + item.url + ' ' + item.format );
+    } ); 
+
+    // do replace
+
+    const REPLACE_PRELOADS_FILE_STACK = [
+        {
+            PATH: checkAdDotBefore( config.templatePartsDestFolder ),
+            FILES: '/**/*.php'
+        }
+    ];
+
+    let stream;
+    for ( let i = 0; i < REPLACE_PRELOADS_FILE_STACK.length; i++ ) {
+        stream = gulp.src( REPLACE_PRELOADS_FILE_STACK[ i ].PATH + REPLACE_PRELOADS_FILE_STACK[ i ].FILES )
+            .pipe( replace( REPLACE_PRELOADS_PATTERN, ( match, position, content ) => {
+                // get template from file content, insert data
+
+                //console.log( 'found ' + match + ' with param ' + position + ' in file content: ' + content + '(end of file content)' );
+
+                const template = content.split( '###TEMPLATE_BEGIN###' )[ 1 ].split( '###TEMPLATE_END###' )[ 0 ];
+
+                //console.log( 'template: ' + template );
+
+                let filledTemplate = '';
+                uniqueFontsList.forEach( ( item, index ) => {
+                    filledTemplate += template.replace( '###HREF###', item.url ).replace( '###TYPE###', item.format ) + '\n';
+                } ); 
+
+                return filledTemplate; 
+            } ) )
+            .pipe( gulp.dest( REPLACE_PRELOADS_FILE_STACK[ i ].PATH ) )
+        ;
+    }
+
+    return stream;
+
+    cb();
+}
+
+//const CSS_FONTS_REPLACE_PATTERN = /@font-face+([a-zA-Z0-9-/-_.:;,"'/(){ ?=#&\n\t])*/g;
+const CSS_FONTS_REPLACE_PATTERN_CHECK = 'font-display:';
+const CSS_FONTS_REPLACE_PATTERN_ADD = ' \n  font-display: fallback; ';
+
+const cssFontsOptimize = ( cb ) => {
+
+    const CSS_FONTS_REPLACE_FILE_STACK = [
+        {
+            PATH: checkAdDotBefore( config.cssDestPath ),
+            FILES: '/**/*.css'
+        }
+    ];
+
+    let stream;
+    for ( let i = 0; i < CSS_FONTS_REPLACE_FILE_STACK.length; i++ ) {
+
+        stream = gulp.src( CSS_FONTS_REPLACE_FILE_STACK[ i ].PATH + CSS_FONTS_REPLACE_FILE_STACK[ i ].FILES )
+            .pipe( replace( CSS_FONTS_REPLACE_PATTERN, ( match ) => {
+
+                //console.log( 'found ' + match );
+
+                if ( match.indexOf( CSS_FONTS_REPLACE_PATTERN_CHECK ) == -1 ) {
+
+                    //console.log( 'replaced to: ' + match + CSS_FONTS_REPLACE_PATTERN_ADD );
+
+                    return match + CSS_FONTS_REPLACE_PATTERN_ADD;
+                }
+                else {
+
+                    //console.log( 'do nothing' );
+
+                    return match;
+                }
+                
+            } ) )
+            .pipe( gulp.dest( CSS_FONTS_REPLACE_FILE_STACK[ i ].PATH ) )
+        ;
+    }
+
+    return stream;
+
+    cb();
+
+}
+
 
 // tasks
 
@@ -831,6 +983,7 @@ const js = series(
 const css = series(
     files,
     projectNameReplace,
+    logoReplace,
     cssFolderClean,
     scssConcat,
     scssToCss,
@@ -860,7 +1013,9 @@ exports.build = series(
         series( jsStackPrepare, jsConcat )
     ),
     parallel( cssCleanAndMinify, jsMinify ),
+    cssFontsOptimize,
     atfCssInclude,
+    preloadFontsReplace,
     publish,
 );
 
@@ -872,6 +1027,14 @@ exports.files = series(
 exports.logo = series(
     logoReplace,
     publish,
+);
+
+exports.preloads = series(
+    preloadFontsReplace,
+);
+
+exports.css_fonts_optimize = series(
+    cssFontsOptimize,
 );
 
 exports.php = series(

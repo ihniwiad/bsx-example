@@ -7,6 +7,13 @@
 			"key": "/template/template-parts-inline-svg-logo"
 		},
 		{
+			"key": "/template/template-parts-fonts-preloads"
+		},
+		{
+			"package": 1,
+			"key": "/scss/template-variables"
+		},
+		{
 			"key": "/scss/global-mixins-breakpoints"
 		},
 		{

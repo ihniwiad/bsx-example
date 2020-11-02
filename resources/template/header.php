@@ -18,6 +18,24 @@
 	// include classes file
 	include './../classes/include-classes.php';
 
+	// get css file version using absolute file path
+	$cssFileName = 'css/style.min.css';
+	$cssFilePath = $rootRelatedAssetsPath . $cssFileName;
+	$cssVersion = file_exists( $cssFilePath ) ? filemtime( $cssFilePath ) : 'null';
+
+	// get js file versions
+	$vendorJsFileName = 'js/vendor.min.js';
+	$vendorJsFilePath = $rootRelatedAssetsPath . $vendorJsFileName;
+	$vendorJsVersion = file_exists( $vendorJsFilePath ) ? filemtime( $vendorJsFilePath ) : 'null';
+
+	$scriptsJsFileName = 'js/scripts.min.js';
+	$scriptsJsFilePath = $rootRelatedAssetsPath . $scriptsJsFileName;
+	$scriptsJsVersion = file_exists( $scriptsJsFilePath ) ? filemtime( $scriptsJsFilePath ) : 'null';
+
+
+	// include classes file
+	//include './classes/include-classes.php';
+
 
 	// include classes
 	if ( class_exists( 'BsxPhotoswipe001' ) ) {
@@ -26,11 +44,10 @@
 
 
 	// logo
-
 	$headerLogoFilePath = $assetsPath.'img/ci/logo/logo.svg';
 	$headerLogoAlt = 'Example Logo';
 	$headerLogoWidth = 136;
-	$headerLogoHeight = 27;
+	$headerLogoHeight = 32;
 
 	$footerLogoFilePath = $headerLogoFilePath;
 	$footerLogoAlt = $headerLogoAlt;
@@ -58,16 +75,34 @@
 
 		<title>bsx Template</title>
 
+		<!-- fonts preload -->
+		<?php include 'template-parts/fonts-preloads.php'; ?>
+		<?php
+			// make css & js paths using relative path & version
+			$currentCssFilePath = $assetsPath . $cssFileName . '?v=' . $cssVersion;
+			//$currentVendorJsFilePath = $assetsPath . $vendorJsFileName . '?v=' . $vendorJsVersion;
+			//$currentScriptsJsFilePath = $assetsPath . $scriptsJsFileName . '?v=' . $scriptsJsVersion;
+			if ( $isDevMode ) {
+				$currentCssFilePath = str_replace ( '.min', '' , $currentCssFilePath );
+				//$currentVendorJsFilePath = str_replace ( '.min', '' , $currentVendorJsFilePath );
+				//$currentScriptsJsFilePath = str_replace ( '.min', '' , $currentScriptsJsFilePath );
+			}
+		?>
+		<!-- css preload -->
+		<link rel="preload" href="<?php echo $currentCssFilePath ?>" as="style">
+		<?php
+		/*
+		<!-- TEST – js preload -->
+		<link rel="preload" href="<?php echo $currentVendorJsFilePath ?>" as="script">
+		<link rel="preload" href="<?php echo $currentScriptsJsFilePath ?>" as="script">
+		*/
+		?>
+
 		<!-- atf style -->
 		<?php include $templatePartsPath . 'atf-style.php'; ?>
 		
 		<!-- css -->
-		<?php
-			// css file version
-			$cssFilePath = $rootRelatedAssetsPath . 'css/style.min.css';
-			$cssVersion = file_exists( $cssFilePath ) ? filemtime( $cssFilePath ) : 'null';
-		?>
-		<link data-test="<?php echo $cssFilePath ?>" href="<?php echo $assetsPath ?>css/style<?php if ( ! $isDevMode ) { ?>.min<?php } ?>.css?v=<?php echo $cssVersion ?>" rel="stylesheet">
+		<link href="<?php echo $currentCssFilePath ?>" rel="stylesheet">
 
 		<!-- favicons -->
 	    <link rel="icon" type="image/png" href="<?php echo $assetsPath ?>img/ci/icon/favicon-16x16.png" sizes="16x16">
