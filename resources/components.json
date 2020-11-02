@@ -32,6 +32,9 @@
 			"key": "/scss/atf-sr-only"
 		},
 		{
+			"key": "/scss/grid-column-row"
+		},
+		{
 			"key": "/fonts/font-awesome"
 		},
 		{
