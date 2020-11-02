@@ -988,7 +988,9 @@ const css = series(
     scssConcat,
     scssToCss,
     cssCleanAndMinify,
+    cssFontsOptimize,
     atfCssInclude,
+    preloadFontsReplace,
 );
 
 const publish = series(
