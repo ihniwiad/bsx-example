@@ -12148,6 +12148,32 @@ a.pswp__share--download:hover {
 .pswp__button > * {
   pointer-events: none; }
 
+.bsx-floating-gallery-inner {
+  margin: -0.25rem; }
+
+.bsx-floating-gallery-figure {
+  margin: 0.25rem; }
+  .bsx-floating-gallery-figure img {
+    width: auto;
+    max-width: unset; }
+
+.bsx-floating-gallery-img-xs {
+  height: calc(4.9vh + 5.6vw); }
+
+.bsx-floating-gallery-img-sm {
+  height: calc(5.6vh + 6.4vw); }
+
+.bsx-floating-gallery-img-md {
+  height: 10rem;
+  height: calc(7vh + 8vw);
+  max-height: 10rem; }
+
+.bsx-floating-gallery-img-lg {
+  height: calc(8.4vh + 9.6vw); }
+
+.bsx-floating-gallery-img-xl {
+  height: calc(10.5vh + 12vw); }
+
 .text-shadow-dark {
   text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.33); }
 

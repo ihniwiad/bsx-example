@@ -107,6 +107,95 @@ if ( ! class_exists( 'BsxPhotoswipe001' ) ) {
         // /function
 
 
+        function printExampleFloatingGallery( $assetsPath = '' ) {
+
+            $fileExtension = '.jpg';
+            $thumbSuffix = '-thumb';
+            $galleryData = array(
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-001-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Lorem ipsum dolor sit amet"
+                ),
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-002-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Consectetuer adipiscing elit"
+                ),
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-003-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Aenean commodo ligula eget dolor"
+                ),
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-004-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Aenean massa. Cum sociis natoque penatibus"
+                ),
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-005-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Et magnis dis parturient montes"
+                ),
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-006-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Nascetur ridiculus mus"
+                ),
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-007-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Donec quam felis, ultricies nec"
+                ),
+                array(
+                    srcTrunc => $assetsPath."example-img/example-img-008-1400x933",
+                    size => "1400x933",
+                    thumbWidth => 263,
+                    thumbHeight => 175,
+                    caption => "Pellentesque eu, pretium quis"
+                ),
+            );
+
+            print('
+<div class="bsx-gallery bsx-floating-gallery" itemscope itemtype="http://schema.org/ImageGallery" data-fn="photoswipe">
+    <div class="bsx-floating-gallery-inner"><!--
+            ');
+
+            foreach( $galleryData as $item ) {
+                print('
+--><figure class="bsx-floating-gallery-figure d-inline-block" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <a class="d-inline-block" href="'.$item[ 'srcTrunc' ].$fileExtension.'" itemprop="contentUrl" data-size="'.$item[ 'size' ].'">
+        <script>document.write(\'<img class="bsx-floating-gallery-img-md" src="" itemprop="thumbnail" alt="'.$item[ 'caption' ].'" width="'.$item[ 'width' ].'" height="'.$item[ 'height' ].'" data-fn="lazyload" data-src="'.$item[ 'srcTrunc' ].$thumbSuffix.$fileExtension.'">\');</script>
+        <noscript><img class="bsx-floating-gallery-img-md" src="'.$item[ 'srcTrunc' ].$thumbSuffix.$fileExtension.'" itemprop="thumbnail" alt="'.$item->caption.'"></noscript>
+    </a>
+    <figcaption class="sr-only" itemprop="caption description">'.$item[ 'caption' ].'</figcaption>
+</figure><!--
+                ');
+            }
+            
+            print('
+    --></div>
+</div>
+            ');
+
+        }
+        // /function
+
+
         function printPhotoswipeShadowboxTemplate() {
             print('
 <!-- PHOTOSWIPE SHADOWBOX TEMPLATE -->

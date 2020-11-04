@@ -247,6 +247,25 @@
 				<!-- /section (h2) -->
 
 
+				<section class="mt-5" id="photoswipe-gallery">
+
+					<div class="container">
+
+						<h2>Photoswipe floating gallery</h2>
+
+						<?php 
+							if ( method_exists( $BsxPhotoswipe, 'printExampleGallery' ) ) {
+								$BsxPhotoswipe->printExampleFloatingGallery( $assetsPath );
+							}
+						?>
+
+					</div>
+					<!-- /.container -->
+
+				</section>
+				<!-- /section (h2) -->
+
+
 				<hr>
 
 				<div class="container my-4">
