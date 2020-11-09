@@ -12183,4 +12183,7 @@ a.pswp__share--download:hover {
 .text-shadow-darkest {
   text-shadow: 0 0 0.5em #000, 0 0 0.1em black, 0 0 1px black; }
 
+.create-mt::before {
+  content: attr(data-mt-n) "@" attr(data-mt-d) "." attr(data-mt-s); }
+
 /*# sourceMappingURL=style.css.map */
