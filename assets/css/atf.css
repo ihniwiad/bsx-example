@@ -160,7 +160,8 @@ body {
   list-style: none; }
   .bsx-appnav-navbar-nav li a {
     display: block;
-    padding: 0.66667em 0.66667em; }
+    padding: 0.66667em 0.66667em;
+    text-decoration: none; }
   .bsx-appnav-navbar-nav > li > a {
     position: relative;
     min-width: 2rem;

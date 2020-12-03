@@ -111,16 +111,19 @@ if ( ! class_exists( 'BsxBasicFooterExampleFooter001' ) ) {
 		<div class="social-list text-center">
 			<ul class="list-inline mb-0">
 				<li class="list-inline-item">
-					<a class="color-hover-facebook" href="#"><i class="fa fa-facebook"></i><span class="sr-only">Facebook</span></a>
+					<a class="footer-icon-link hover-text-facebook" href="#"><i class="fa fa-facebook"></i><span class="sr-only">Facebook</span></a>
 				</li>
 				<li class="list-inline-item">
-					<a class="color-hover-twitter" href="#"><i class="fa fa-twitter"></i><span class="sr-only">Twitter</span></a>
+					<a class="footer-icon-link hover-text-twitter" href="#"><i class="fa fa-twitter"></i><span class="sr-only">Twitter</span></a>
 				</li>
 				<li class="list-inline-item">
-					<a class="color-hover-xing" href="#"><i class="fa fa-xing"></i><span class="sr-only">Xing</span></a>
+					<a class="footer-icon-link hover-text-instagram" href="#"><i class="fa fa-instagram"></i><span class="sr-only">Instagram</span></a>
 				</li>
 				<li class="list-inline-item">
-					<a class="color-hover-rss" href="#"><i class="fa fa-rss"></i><span class="sr-only">RSS</span></a>
+					<a class="footer-icon-link hover-text-googleplus" href="#"><i class="fa fa-google-plus"></i><span class="sr-only">Google plus</span></a>
+				</li>
+				<li class="list-inline-item">
+					<a class="footer-icon-link hover-text-xing" href="#"><i class="fa fa-xing"></i><span class="sr-only">Xing</span></a>
 				</li>
 			</ul>
 		</div>
@@ -128,10 +131,10 @@ if ( ! class_exists( 'BsxBasicFooterExampleFooter001' ) ) {
 		<hr class="my-2">
 
 		<div class="row small">
-			<div class="col-sm">
+			<div class="col-sm mb-1">
 				&copy; Copyright '.date_format( date_create(), 'Y' ).' <a class="footer-link" href="#">somebody</a>
 			</div>
-			<div class="col-sm text-right">
+			<div class="col-sm text-sm-right mb-1">
 				<a class="footer-link" href="#">Some</a>&ensp;|&ensp;<a class="footer-link" href="#">More</a>&ensp;|&ensp;<a class="footer-link" href="#">Links</a>
 			</div>
 		</div>

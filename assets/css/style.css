@@ -2458,7 +2458,7 @@ body {
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.5;
-  color: #343a40;
+  color: #212529;
   text-align: left;
   background-color: #fff; }
 
@@ -3935,7 +3935,7 @@ pre {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #343a40; }
+  color: #212529; }
   .table th,
   .table td {
     padding: 0.75rem;
@@ -3970,7 +3970,7 @@ pre {
   background-color: rgba(0, 0, 0, 0.05); }
 
 .table-hover tbody tr:hover {
-  color: #343a40;
+  color: #212529;
   background-color: rgba(0, 0, 0, 0.075); }
 
 .table-primary,
@@ -4277,7 +4277,7 @@ select.form-control:focus::-ms-value {
   margin-bottom: 0;
   font-size: 1rem;
   line-height: 1.5;
-  color: #343a40;
+  color: #212529;
   background-color: transparent;
   border: solid transparent;
   border-width: 1px 0; }
@@ -4607,7 +4607,7 @@ textarea.form-control {
 .btn {
   display: inline-block;
   font-weight: 400;
-  color: #343a40;
+  color: #212529;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
@@ -4632,7 +4632,7 @@ textarea.form-control {
       -o-transition: none;
       transition: none; } }
   .btn:hover {
-    color: #343a40;
+    color: #212529;
     text-decoration: none; }
   .btn:focus, .btn.focus {
     outline: 0;
@@ -5150,7 +5150,7 @@ input[type="button"].btn-block {
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
   font-size: 1rem;
-  color: #343a40;
+  color: #212529;
   text-align: left;
   list-style: none;
   background-color: #fff;
@@ -6998,7 +6998,7 @@ input[type="button"].btn-block {
     text-decoration: none;
     background-color: #f8f9fa; }
   .list-group-item-action:active {
-    color: #343a40;
+    color: #212529;
     background-color: #e9ecef; }
 
 .list-group-item {
@@ -7700,7 +7700,7 @@ a.close.disabled {
 
 .popover-body {
   padding: 0.5rem 0.75rem;
-  color: #343a40; }
+  color: #212529; }
 
 .carousel {
   position: relative; }
@@ -10656,7 +10656,7 @@ a.text-dark:hover, a.text-dark:focus {
   color: #001c33 !important; }
 
 .text-body {
-  color: #343a40 !important; }
+  color: #212529 !important; }
 
 .text-muted {
   color: #6c757d !important; }
@@ -10809,7 +10809,8 @@ a.text-dark:hover, a.text-dark:focus {
 
 @media (max-width: 991.98px) {
   .bsx-appnav-navbar-nav:not(.bsx-allmedia-dropdown-nav) li > a {
-    color: #495057; }
+    color: #495057;
+    text-decoration: none; }
   .bsx-appnav-navbar-nav:not(.bsx-allmedia-dropdown-nav) li.active > a {
     color: #0275D8;
     background-color: rgba(0, 0, 0, 0.05); }
@@ -11451,6 +11452,11 @@ body.is-android .bg-mobile-no-repeat {
   color: inherit; }
   .footer-link:hover, .footer-link:focus {
     text-decoration: underline;
+    color: inherit; }
+
+.footer-icon-link {
+  color: inherit; }
+  .footer-icon-link:hover, .footer-icon-link:focus {
     color: inherit; }
 
 /*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */
@@ -12182,6 +12188,47 @@ a.pswp__share--download:hover {
 
 .text-shadow-darkest {
   text-shadow: 0 0 0.5em #000, 0 0 0.1em black, 0 0 1px black; }
+
+.text-facebook {
+  color: #3b5998 !important; }
+
+.hover-text-facebook:hover, .hover-text-facebook:focus {
+  color: #3b5998 !important; }
+
+.text-googleplus {
+  color: #4285F4 !important; }
+
+.hover-text-googleplus:hover, .hover-text-googleplus:focus {
+  color: #4285F4 !important; }
+
+.text-instagram {
+  color: #FF543E !important; }
+
+.hover-text-instagram:hover, .hover-text-instagram:focus {
+  color: #FF543E !important; }
+
+.text-linkedin {
+  color: #0073B0 !important; }
+
+.hover-text-linkedin:hover, .hover-text-linkedin:focus {
+  color: #0073B0 !important; }
+
+.text-twitter {
+  color: #00aced !important; }
+
+.hover-text-twitter:hover, .hover-text-twitter:focus {
+  color: #00aced !important; }
+
+.text-xing {
+  color: #B0D400 !important; }
+
+.hover-text-xing:hover, .hover-text-xing:focus {
+  color: #B0D400 !important; }
+
+[class*="hover-text-"] {
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
 
 .create-mt::before {
   content: attr(data-mt-n) "@" attr(data-mt-d) "." attr(data-mt-s); }
