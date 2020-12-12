@@ -11260,6 +11260,10 @@ body.is-ios .bg-mobile-no-repeat,
 body.is-android .bg-mobile-no-repeat {
   background-repeat: no-repeat; }
 
+@media (min-width: 2000px) {
+  .bg-w2000-static {
+    background-attachment: scroll !important; } }
+
 .bg-cover {
   -webkit-background-size: cover;
   background-size: cover; }
@@ -11372,6 +11376,18 @@ body.is-android .bg-mobile-no-repeat {
 
 .bg-black-opaque {
   background-color: rgba(0, 0, 0, 0.65); }
+
+.fixed-banner {
+  position: fixed;
+  z-index: 1032;
+  left: 0;
+  right: 0; }
+
+.fixed-banner-top {
+  top: 0; }
+
+.fixed-banner-bottom {
+  bottom: 0; }
 
 .banner-st-1 {
   padding-top: 6rem;
@@ -12179,6 +12195,33 @@ a.pswp__share--download:hover {
 
 .bsx-floating-gallery-img-xl {
   height: calc(10.5vh + 12vw); }
+
+.bsx-clickable-overlay-wrapper {
+  position: relative; }
+
+.bsx-clickable-overlay {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  border: 0;
+  padding: 1rem;
+  cursow: pointer;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
 
 .text-shadow-dark {
   text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.33); }

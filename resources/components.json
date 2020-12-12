@@ -107,6 +107,9 @@
 			"key": "/js/scripts/libs/init-toggle"
 		},
 		{
+			"key": "/js/scripts/libs/data-processing-consent"
+		},
+		{
 			"key": "/js/scripts/libs/jquery-lazyload-custom"
 		},
 		{
@@ -145,6 +148,9 @@
 			"key": "/libs/components-banners-background"
 		},
 		{
+			"key": "/libs/components-banners-fixed-banner"
+		},
+		{
 			"key": "/libs/components-banners-st-banner"
 		},
 		{
@@ -157,7 +163,13 @@
 			"key": "/libs/components-footer-basic-footer"
 		},
 		{
+			"key": "/libs/components-images-zoomable-image"
+		},
+		{
 			"key": "/libs/components-photoswipe-basic"
+		},
+		{
+			"key": "/libs/content-consent-related-element"
 		},
 		{
 			"key": "/libs/content-typography-text-shadow"
