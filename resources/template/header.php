@@ -109,10 +109,9 @@
 	    <link rel="icon" type="image/png" href="<?php echo $assetsPath ?>img/ci/icon/favicon-32x32.png" sizes="32x32">
 	    <link rel="icon" type="image/png" href="<?php echo $assetsPath ?>img/ci/icon/favicon-96x96.png" sizes="96x96">
 
-	    <link rel="apple-touch-icon" href="<?php echo $assetsPath ?>img/ci/icon/apple-touch-icon-120x120.png">
-	    <link rel="apple-touch-icon" href="<?php echo $assetsPath ?>img/ci/icon/apple-touch-icon-152x152.png" sizes="152x152">
-	    <link rel="apple-touch-icon" href="<?php echo $assetsPath ?>img/ci/icon/apple-touch-icon-167x167.png" sizes="167x167">
 	    <link rel="apple-touch-icon" href="<?php echo $assetsPath ?>img/ci/icon/apple-touch-icon-180x180.png" sizes="180x180">
+	    <link rel="manifest" href="<?php echo $assetsPath ?>img/ci/icon/site.webmanifest">
+	    <link rel="shortcut icon" href="<?php echo $assetsPath ?>img/ci/icon/favicon.ico">
 		
 	</head>
 	

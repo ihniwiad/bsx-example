@@ -182,7 +182,7 @@ var BSX_UTILS = ( function( $ ) {
     };
 
     // calculate sizes to fit inner element into outer element (only if inner is larger than outer) keeping distance in x & y direction
-    getFitIntoSizes = function( settings ) {
+    var getFitIntoSizes = function( settings ) {
         
         var outerWidth = settings.outerWidth || Utils.$window.width();
         var outerHeight = settings.outerHeight || Utils.$window.height();
@@ -250,7 +250,7 @@ var BSX_UTILS = ( function( $ ) {
     var mediaSize = '';
     var mediaSizeBodyClassPrefix = 'media-';
 
-    _getmediaSize = function() {
+    var _getmediaSize = function() {
         var currentmediaSize;
         if ( !! window.matchMedia ) {
             // modern browsers
@@ -309,7 +309,7 @@ var BSX_UTILS = ( function( $ ) {
     // /get options from attribute
 
     // get elem from selector
-    getElementFromSelector = function( selector ) {
+    var getElementFromSelector = function( selector ) {
         var $elem = Utils.$functionElems.filter( selector );
         if ( $elem.length == 0 ) {
             $elem = Utils.$targetElems.filter( selector );
