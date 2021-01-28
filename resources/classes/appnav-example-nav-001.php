@@ -305,11 +305,11 @@ if ( ! class_exists( 'BsxAppNavExampleNav001' ) ) {
 
 	    function printExampleHeader( $headerConfig = null ) {
 	    	print('
-<header class="bsx-appnav-navbar bsx-appnav-fixed-top" data-fn="anchor-offset-elem" data-tg="sticky-container-below">
+<header class="bsx-appnav-navbar bsx-appnav-fixed-top bsx-appnav-navbar-scroll-toggle" data-fn="anchor-offset-elem" data-tg="sticky-container-below">
 
 	<nav class="bsx-appnav-navbar-container">
 
-		<button class="bsx-appnav-navbar-toggler" id="toggle-navbar-collapse" type="button" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" data-fn="toggle" data-fn-target="[data-tg=\'navbar-collapse\']" data-tg="dropdown-multilevel-excluded">
+		<button class="bsx-appnav-navbar-toggler" id="toggle-navbar-collapse" type="button" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" data-fn="toggle" data-fn-options="{ bodyOpenedClass: \'nav-open\' }" data-fn-target="[data-tg=\'navbar-collapse\']" data-tg="dropdown-multilevel-excluded">
 			<span class="sr-only">Menu</span>
 			<i class="fa fa-navicon" aria-hidden="true"></i>
 		</button>

@@ -10770,6 +10770,15 @@ a.text-dark:hover, a.text-dark:focus {
       content: none;
       display: none; } }
 
+.bsx-appnav-navbar-scroll-toggle {
+  -webkit-transition: all 400ms ease-in-out;
+  -o-transition: all 400ms ease-in-out;
+  transition: all 400ms ease-in-out; }
+
+body.scroll-away-top.scroll-down:not(.nav-open):not(.scroll-bottom) .bsx-appnav-navbar-scroll-toggle {
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0); }
+
 @media (max-width: 991.98px) {
   .bsx-appnav-navbar-collapse {
     position: fixed;
@@ -11421,6 +11430,10 @@ body.is-android .bg-mobile-no-repeat {
     opacity: 1; }
   .to-top-wrapper > .btn {
     margin: 0.5em; }
+
+body.scroll-away-top .to-top-wrapper {
+  height: auto;
+  opacity: 1; }
 
 @media (max-width: 636px) {
   .page-footer > *:last-child {

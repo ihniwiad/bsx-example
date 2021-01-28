@@ -4,6 +4,11 @@
 			{
 				"key": "/scss/template-variables"
 			}
+		],
+		"atf": [
+			{
+				"key": "/scss/template-variables"
+			}
 		]
 	},
 	"js": null,
