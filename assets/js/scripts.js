@@ -2020,6 +2020,7 @@ IE lte 11 handle overflow of -banner-inner within .banner-vh-{ ... }
 
 } )( jQuery, BSX_UTILS );
 /*
+<!-- if using remote trigger use aria-controls and aria-expanded together (trigger) with aria-labeledby (popup) -->
 <div class="fixed-banner fixed-banner-bottom fixed-banner-closable bg-warning text-black d-none" tabindex="-1" role="dialog" hidden data-fn="cookie-related-elem" data-fn-options="{ cookieName: 'privacyBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none' }">
 	<div class="container py-3">
 		<div class="mb-2">
@@ -2067,6 +2068,13 @@ IE lte 11 handle overflow of -banner-inner within .banner-vh-{ ... }
 
 			var $elem = $( this );
 
+      // set trigger aria-expanded
+      var id = $elem.attr( 'id' );
+      var $triggers = Utils.$functionElems.filter( '[aria-controls="' + id + '"]' );
+      if ( $triggers.length > 0 ) {
+          $triggers.ariaExpanded( true );
+      }
+
 			if ( options.focusOnOpen ) {
 				if ( CookieRelatedElem.$focussedElem === null ) {
 					CookieRelatedElem.$focussedElem = $( Utils.$document.activeElement );
@@ -2089,6 +2097,13 @@ IE lte 11 handle overflow of -banner-inner within .banner-vh-{ ... }
 		$.fn._hideElem = function() {
 
 			var $elem = $( this );
+
+      // set trigger aria-expanded
+      var id = $elem.attr( 'id' );
+      var $triggers = Utils.$functionElems.filter( '[aria-controls="' + id + '"]' );
+      if ( $triggers.length > 0 ) {
+          $triggers.ariaExpanded( false );
+      }
 			
 			if ( !! options.hiddenClass ) {
 				$elem.addClass( options.hiddenClass );
@@ -2399,12 +2414,12 @@ link into hash tab:
 /*
 
 <!-- button to show consent popup -->
-<button class="btn btn-primary" data-fn="data-processing-popup-trigger">Show consent banner</button>
+<button class="btn btn-primary" id="consent-popup-trigger" aria-controls="consent-popup" aria-expanded="false" data-fn="data-processing-popup-trigger">Show consent banner</button>
 
 
-<!-- consent popup -->		
-<div class="fixed-banner fixed-banner-bottom fixed-banner-closable bg-secondary d-none" tabindex="-1" role="dialog" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
-			
+<!-- consent popup -->      
+<div class="fixed-banner fixed-banner-bottom fixed-banner-closable bg-secondary d-none" id="consent-popup" aria-labeledby="consent-popup-trigger" tabindex="-1" role="dialog" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
+            
 	<div class="container py-3">
 		
 		<form data-fn="data-processing-form" data-fn-options="{ cookieName: 'dataProcessingConsent', cookieExpiresDays: 365, categoryInputSelector: '[data-g-tg=category-input]' }">
@@ -3299,7 +3314,8 @@ link into hash tab:
     var Scrolling = {
         target: Utils.$body,
         position: 0,
-        direction: ''
+        direction: '',
+        place: ''
     };
 
     Scrolling.getPosition = function() {
@@ -3322,6 +3338,14 @@ link into hash tab:
 
     Scrolling.init = function() {
 
+        // TEST
+        // $( window ).on('scrollUp', function() { console.log( 'scrollUp' ) })
+        // $( window ).on('scrollDown', function() { console.log( 'scrollDown' ) })
+        // $( window ).on('scrollTop', function() { console.log( 'scrollTop' ) })
+        // $( window ).on('scrollNearTop', function() { console.log( 'scrollNearTop' ) })
+        // $( window ).on('scrollAwayTop', function() { console.log( 'scrollAwayTop' ) })
+        // $( window ).on('scrollBottom', function() { console.log( 'scrollBottom' ) })
+
         var defaults = {
             scrollDownClassName: 'scroll-down',
             scrollUpClassName: 'scroll-up',
@@ -3329,7 +3353,15 @@ link into hash tab:
             scrollBottomClassName: 'scroll-bottom',
             scrollNearTopClassName: 'scroll-near-top',
             scrollAwayTopClassName: 'scroll-away-top',
-            nearTopThreshold: 100
+            nearTopThreshold: 100,
+            triggerEvents: true,
+            scrollDownEventName: 'scrollDown',
+            scrollUpEventName: 'scrollUp',
+            scrollTopEventName: 'scrollTop',
+            scrollBottomEventName: 'scrollBottom',
+            scrollNearTopEventName: 'scrollNearTop',
+            scrollAwayTopEventName: 'scrollAwayTop'
+
         };
 
         var $elem = $( Scrolling.target );
@@ -3353,6 +3385,11 @@ link into hash tab:
             if ( currentDirection && Scrolling.direction != currentDirection ) {
                 if ( currentDirection == 'down' ) {
                     // scrolling down
+
+                    if ( options.triggerEvents ) {
+                        Utils.$window.trigger( options.scrollDownEventName );
+                    }
+                    
                     if ( ! $elem.is( '.' + options.scrollDownClassName ) ) {
                         $elem.addClass( options.scrollDownClassName );
                     }
@@ -3362,6 +3399,11 @@ link into hash tab:
                 }
                 else {
                     // scrolling up
+                    
+                    if ( options.triggerEvents ) {
+                        Utils.$window.trigger( options.scrollUpEventName );
+                    }
+                    
                     if ( ! $elem.is( '.' + options.scrollUpClassName ) ) {
                         $elem.addClass( options.scrollUpClassName );
                     }
@@ -3373,6 +3415,11 @@ link into hash tab:
 
             // check & set top class names
             if ( currentPosition == 0 ) {
+                if ( options.triggerEvents && Scrolling.place != 'top' ) {
+                    Utils.$window.trigger( options.scrollTopEventName );
+                    Scrolling.place = 'top';
+                }
+                    
                 if ( ! $elem.is( '.' + options.scrollTopClassName ) ) {
                     $elem.addClass( options.scrollTopClassName );
                 }
@@ -3383,20 +3430,14 @@ link into hash tab:
                 }
             }
 
-            // check & set bottom class name
-            if ( currentPosition + Utils.$window.height() >= Scrolling.target.height() ) {
-                if ( ! $elem.is( '.' + options.scrollBottomClassName ) ) {
-                    $elem.addClass( options.scrollBottomClassName );
-                }
-            }
-            else {
-                if ( $elem.is( '.' + options.scrollBottomClassName ) ) {
-                    $elem.removeClass( options.scrollBottomClassName );
-                }
-            }
-
             // check & set near away / class names
             if ( currentPosition < options.nearTopThreshold ) {
+                if ( options.triggerEvents && Scrolling.position != 0 && Scrolling.place != 'near-top' ) {
+                    // do not trigger near-top event if top
+                    Utils.$window.trigger( options.scrollNearTopEventName );
+                    Scrolling.place = 'near-top';
+                }
+
                 if ( ! $elem.is( '.' + options.scrollNearTopClassName ) ) {
                     $elem.addClass( options.scrollNearTopClassName );
                 }
@@ -3405,11 +3446,35 @@ link into hash tab:
                 }
             }
             else {
+                if ( options.triggerEvents && Scrolling.place != 'away-top' ) {
+                    Utils.$window.trigger( options.scrollAwayTopEventName );
+                    Scrolling.place = 'away-top';
+                }
+
                 if ( ! $elem.is( '.' + options.scrollAwayTopClassName ) ) {
                     $elem.addClass( options.scrollAwayTopClassName );
                 }
                 if ( $elem.is( '.' + options.scrollNearTopClassName ) ) {
                     $elem.removeClass( options.scrollNearTopClassName );
+                }
+            }
+
+            // check & set bottom class name
+            // place AFTER checking away-top to mak bottom event last while scrolling down (after away-top)
+            // round body height since might be larger than sum of both rounded scroll position and window height
+            if ( currentPosition + Utils.$window.height() >= Math.round( Scrolling.target.height() ) ) {
+                if ( options.triggerEvents && Scrolling.place != 'bottom' ) {
+                    Utils.$window.trigger( options.scrollBottomEventName );
+                    Scrolling.place = 'bottom';
+                }
+                    
+                if ( ! $elem.is( '.' + options.scrollBottomClassName ) ) {
+                    $elem.addClass( options.scrollBottomClassName );
+                }
+            }
+            else {
+                if ( $elem.is( '.' + options.scrollBottomClassName ) ) {
+                    $elem.removeClass( options.scrollBottomClassName );
                 }
             }
 
