@@ -10775,7 +10775,7 @@ a.text-dark:hover, a.text-dark:focus {
   -o-transition: all 400ms ease-in-out;
   transition: all 400ms ease-in-out; }
 
-body.scroll-away-top.scroll-down:not(.nav-open):not(.scroll-bottom) .bsx-appnav-navbar-scroll-toggle {
+body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle {
   -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0); }
 
@@ -10789,6 +10789,7 @@ body.scroll-away-top.scroll-down:not(.nav-open):not(.scroll-bottom) .bsx-appnav-
     top: 0;
     left: 0;
     bottom: 0;
+    min-height: 100vh;
     width: 80%;
     max-width: 30rem;
     background-color: #fff;
@@ -11419,37 +11420,20 @@ body.is-android .bg-mobile-no-repeat {
   z-index: 15;
   right: 0;
   bottom: 0;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  -webkit-transition: opacity 0.4s ease-in-out;
-  -o-transition: opacity 0.4s ease-in-out;
-  transition: opacity 0.4s ease-in-out; }
+  -webkit-transition: all 400ms ease-in-out;
+  -o-transition: all 400ms ease-in-out;
+  transition: all 400ms ease-in-out;
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0); }
   .to-top-wrapper.show {
-    height: auto;
-    opacity: 1; }
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
   .to-top-wrapper > .btn {
     margin: 0.5em; }
 
-body.scroll-away-top .to-top-wrapper {
-  height: auto;
-  opacity: 1; }
-
-@media (max-width: 636px) {
-  .page-footer > *:last-child {
-    margin-bottom: 1.875rem; } }
-
-@media (min-width: 768px) and (max-width: 828px) {
-  .page-footer > *:last-child {
-    margin-bottom: 1.875rem; } }
-
-@media (min-width: 992px) and (max-width: 1052px) {
-  .page-footer > *:last-child {
-    margin-bottom: 1.875rem; } }
-
-@media (min-width: 1200px) and (max-width: 1260px) {
-  .page-footer > *:last-child {
-    margin-bottom: 1.875rem; } }
+body.scroll-away-top.scroll-up .to-top-wrapper {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
 
 .page-footer {
   margin-top: 2rem;
@@ -12261,6 +12245,9 @@ a.pswp__share--download:hover {
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease; }
+
+img[data-fn="lazyload"][src*="data:image/svg+xml;base64"] {
+  background: rgba(0, 0, 0, 0.05); }
 
 .text-shadow-dark {
   text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.33); }
