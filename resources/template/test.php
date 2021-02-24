@@ -77,7 +77,8 @@
 						<div class="col-md-4 p">
 							
 							<figure class="">
-								<img class="img-fluid" src="<?php echo $assetsPath ?>example-img/example-img-008-720x480.jpg" alt="TODO">
+								<script>document.write('<img class="img-fluid" src="" data-src="<?php echo $assetsPath ?>example-img/example-img-008-720x480.jpg" alt="TODO" width="720" height="480" data-fn="lazyload">');</script>
+								<noscript><img class="img-fluid rounded-circle" src="<?php echo $assetsPath ?>example-img/example-img-008-720x480.jpg" alt="TODO"></noscript>
 							</figure>
 
 							<h3>Donec quam felis</h3>
@@ -93,11 +94,10 @@
 						</div>
 						
 						<div class="col-md-4 p">
-
-							<figure class="has-play-button">
-								<a href="#">
-									<img class="img-fluid" src="<?php echo $assetsPath ?>example-img/example-img-001-720x480.jpg" alt="TODO">
-								</a>
+							
+							<figure class="">
+								<script>document.write('<img class="img-fluid" src="" data-src="<?php echo $assetsPath ?>example-img/example-img-001-720x480.jpg" alt="TODO" width="720" height="480" data-fn="lazyload">');</script>
+								<noscript><img class="img-fluid rounded-circle" src="<?php echo $assetsPath ?>example-img/example-img-001-720x480.jpg" alt="TODO"></noscript>
 							</figure>
 						
 							<h3>Rhoncus ut, imperdiet a</h3>
@@ -113,11 +113,10 @@
 						</div>
 						
 						<div class="col-md-4 p">
-
-							<figure class="has-play-button">
-								<a href="#">
-									<img class="img-fluid" src="<?php echo $assetsPath ?>example-img/example-img-005-720x480.jpg" alt="TODO">
-								</a>
+							
+							<figure class="">
+								<script>document.write('<img class="img-fluid" src="" data-src="<?php echo $assetsPath ?>example-img/example-img-005-720x480.jpg" alt="TODO" width="720" height="480" data-fn="lazyload">');</script>
+								<noscript><img class="img-fluid rounded-circle" src="<?php echo $assetsPath ?>example-img/example-img-005-720x480.jpg" alt="TODO"></noscript>
 							</figure>
 						
 							<h3>Phasellus viverra nulla</h3>
